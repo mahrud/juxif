@@ -1,12 +1,34 @@
 import web
 
 urls = (
-  '/(.*)', 'index'
+  '/',                     'homepage'
+
+#  '/hellicode',            'hc_home'
+#  '/hellicode/dashboard',  'hc_dash'
+
+#  '/hellicode/problemset', 'hc_pset'
+#  '/hellicode/problem',    'hc_prob'
+#  '/hellicode/contest',    'hc_contest'
+
+#  '/hellicode/submit',     'hc_submit'
+
+#  '/hellicode/ranking',    'hc_rank'
+#  '/hellicode/scoreboard', 'hc_board'
+#  '/hellicode/status',     'hc_stat'
+
+#  '/hellicode/admin',      'hc_admin'
+#  '/hellicode/login',      'hc_login'
+#  '/hellicode/user',       'hc_user'
+#  '/hellicode/users',      'hc_users'
+#  '/hellicode/logout',     'hc_logout'
+#  '/hellicode/register',   'hc_register'
+
+#  '/hellicode/news',       'hc_news'
 )
 
-class index:
-    def GET(self, name):
-        return "Hello, world!\nurl=%s" % (name)
+class homepage:
+    def GET(self):
+        return "Hello, world!"
 
 if __name__ == "__main__":
     app = web.application(urls, globals())
