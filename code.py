@@ -1,32 +1,31 @@
 import web
-#import MySQLdb
+import secret
 
-#conn = MySQLdb.connection (host='127.0.0.1', user='hellicode', passwd='', db='hellicode')
+db = web.database(dbn='mysql', user='root', pw=secret.pw, db='test')
 
 render = web.template.render('templates/', base='layout')
+
 urls = (
-  '/',                              'home',
+    '/',                    'home',
 
-#  '/hellicode',                    'dash',
+#    '/problemset/(.*)',    'pset',
+#    '/problem/(.*)',       'prob',
+#    '/contest/(.*)',       'contest',
 
-#  '/hellicode/problemset/(.*)',    'pset',
-#  '/hellicode/problem/(.*)',       'prob',
-#  '/hellicode/contest/(.*)',       'contest',
+    '/submit',              'submit',
 
-  '/hellicode/submit',              'submit',
+#    '/ranking',            'rank',
+#    '/scoreboard/(.*)',    'board',  #   http://icpc.sharif.ir/acmicpc12/scoreboard/
+    '/status/(.+)',         'status'
 
-#  '/hellicode/ranking',            'rank',
-#  '/hellicode/scoreboard/(.*)',    'board',
-  '/hellicode/status/(.*)',         'stat'
+#    '/admin',              'admin',
+#    '/login',              'login',
+#    '/user/(.*)',          'user',
+#    '/users',              'users',
+#    '/logout',             'logout',
+#    '/register',           'register',
 
-#  '/hellicode/admin',              'admin',
-#  '/hellicode/login',              'login',
-#  '/hellicode/user/(.*)',          'user',
-#  '/hellicode/users',              'users',
-#  '/hellicode/logout',             'logout',
-#  '/hellicode/register',           'register',
-
-#  '/hellicode/news/(.*)',          'news',
+#    '/news/(.*)',          'news',
 )
 
 class home:
@@ -37,14 +36,11 @@ class submit:
     def GET(self):
         return render.submit()
 
-class stat:
+class status:
     def GET(self, subid):
-        conn.query("SELECT * FROM submitions where id=%i" % (subid))
-        res = conn.store_result()
-        return render.stat(res.fetch_row()[0])
+        q = db.select('test', what='a,b', where='b=%s' % (subid))
+        return render.status(q[0].a)
 
 if __name__ == "__main__":
     app = web.application(urls, globals())
     app.run()
-
-#conn.close()
