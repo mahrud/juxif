@@ -37,6 +37,7 @@ class shoot:
             pid = int(i.pid), 
             cid = int(i.cid), 
             addr = addr, 
+            lang = i.lang,
             mode = 0 # mode[i.cid]  #FIXME
             # created is set to CURRENT_TIMESTAMP,
             # access is updated by judge
@@ -47,8 +48,13 @@ class shoot:
 
 class status:
     def GET(self, subid):
-        query = db.select('shots', what='*', where='subid=%s' % (subid))
-        return render.status(query[0])
+        if subid:
+            where = 'subid=%s' % (subid)
+        else:
+            where = 'true'
+
+        query = db.select('shots', what='subid,uid,pid,cid,addr,lang,created', where=where)
+        return render.status(query)
 
 if __name__ == "__main__":
     app = web.application(urls, globals())

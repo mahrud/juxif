@@ -1,0 +1,64 @@
+
+body {
+	background-color: white;
+	font-family: verdana,helvetica,arial,sans-serif;
+}
+div#tummy {
+	margin: 25px;
+	margin-top: 50px;
+	padding-top: 0px;
+	background-color: white;
+}
+div { border: 0px solid gray; text-align: center; padding: 1%; }		
+#header { }
+#menu { font-family: serif; font-size: x-large; }
+#upper { font-size: small;  } 
+#main { }
+#content { border-width: 0px;float: right; width: 70%; margin: 1%; padding-top: 0px; }
+#sidebar { border-width: 0px; float: left; width: 20%; margin: 1%; padding-top: 0px; }
+#footer { clear: both; font-size: small; color: gray; }
+/*#description { border-top: 2px solid gray; }*/
+
+a.unreal:link { text-decoration: none; color: black; }
+a.unreal:visited { text-decoration: none; color: black; }
+.panel { font-size: small; border-width: 1px; padding: 15px; background-color: rgb(240,240,240); }
+.caption { font-size: small; border-width: 1px; border-bottom-width: 0px; padding: 5px; background-color: gray; color: white; font-weight: bold; 
+			border-top-left-radius: 6px; border-top-right-radius: 6px; }
+#userpanel { padding-bottom: 5px; }
+/*#username { font-size: small; width: 50%; height: 20px; }
+ * 		#password { font-size: small; width: 50%; height: 20px; }*/
+.panelinput { font-size: small; width: 50%; height: 20px; }
+.input { font-size: small; width: 90%; height: 20px; }
+#loginsubmit { font-size: small; height: 25px; }
+#file { font-size: small; }
+.bottun { font-size: small; }
+.success { color: green; font-size: small; }
+.unsuccess { color: red; font-size: small; }
+
+table { text-align: center; width: 95%; border-top-left-radius: 6px; border-top-right-radius: 6px; }
+table { border-width: 1px; border-right-width: 0px; border-top-width: 0px; border-style: solid; font-size: small; }
+td { border-width: 1px; border-left-width: 0px; border-bottom-width: 0px; border-color: gray; border-style: solid; padding: 5px; }
+th { border-width: 1px; border-left-width: 0px; border-bottom-width: 0px; border-color: gray; border-style: solid; padding: 5px; background-color: gray; }
+.leftmost { border-top-left-radius: 6px; }
+.rightmost { border-top-right-radius: 6px; }
+.even { background-color: rgb(240,240,240); }
+.odd { background-color: rgb(235,235,235); }
+.zero { color: white; border-top-left-radius: 6px; border-top-right-radius: 6px; }
+
+.ptitle { font-size: large; font-weight: bold; }
+.pcontent { font-size: small; border: 1px solid rgb(230,230,230); }
+
+.ntitle { text-align: left; font-size: normal; font-weight: bold; }
+.ndate { text-align: left; font-size: small; }
+.ntext { text-align: left; font-size: small; }
+
+#problem { font-size: small; width: 50%; height: 20px; }
+
+.star { font-size: normal; font-weight: bold; }
+
+#title-left { color: red; }
+
+#title-left { color: white; font-size:x-large; font-family:serif; border-color:#FFF; border:1px solid #FFF; padding:2px; border-top-left-radius: 6px; }
+#title-right { font-size:x-large; font-family:serif; background-color:#FFF; border:1px solid #FFF; padding:2px;  border-bottom-right-radius: 6px; }
+
+/*.countdown { display: inline; border: 1px solid gray; border-left-width: 0px; color: gray; padding: 6px; } */
