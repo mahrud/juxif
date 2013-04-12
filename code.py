@@ -1,7 +1,8 @@
+import os
 import web
 import secret
 
-db = web.database(dbn='mysql', user='root', pw=secret.pw, db='test')
+db = web.database(dbn='mysql', user='root', pw=secret.pw, db='juxif')
 
 render = web.template.render('templates/', base='layout')
 
@@ -11,7 +12,7 @@ urls = (
 #    '/problem/(.+)',    'pset',
     '/shoot',           'shoot',
     '/status/(.*)',     'status'
-#    '/board/(.*)',      'board', #   http://icpc.sharif.ir/acmicpc12/scoreboard/
+#    '/board/(.*)',      'board', # http://icpc.sharif.ir/acmicpc12/scoreboard/
 )
 
 class home:
@@ -21,15 +22,33 @@ class home:
 class shoot:
     def GET(self):
         return render.shoot()
+
     def POST(self):
-        i = web.input()
-        n = db.insert('test', a=int(i.b)*10, b=int(i.b))
-        raise web.seeother('/status/%s' % (i.b))
+        i = web.input(code={})
+
+        addr = '%s/source/%s' % (os.getcwd(), i.code.filename)
+        code = file(addr, 'w')
+        code.write(i.code.value)
+        code.close()
+
+        subid = db.insert('shots', 
+            # subid has AUTO_INCREMENT, 
+            uid = int(i.uid), 
+            pid = int(i.pid), 
+            cid = int(i.cid), 
+            addr = addr, 
+            mode = 0 # mode[i.cid]  #FIXME
+            # created is set to CURRENT_TIMESTAMP,
+            # access is updated by judge
+            # modify is updated by judge)
+            )
+
+        raise web.seeother('/status/%s' % (subid))
 
 class status:
     def GET(self, subid):
-        q = db.select('test', what='a,b', where='b=%s' % (subid))
-        return render.status(q[0].a)
+        query = db.select('shots', what='*', where='subid=%s' % (subid))
+        return render.status(query[0])
 
 if __name__ == "__main__":
     app = web.application(urls, globals())
