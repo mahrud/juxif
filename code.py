@@ -6,35 +6,25 @@ db = web.database(dbn='mysql', user='root', pw=secret.pw, db='test')
 render = web.template.render('templates/', base='layout')
 
 urls = (
-    '/',                    'home',
-
-#    '/problemset/(.*)',    'pset',
-#    '/problem/(.*)',       'prob',
-#    '/contest/(.*)',       'contest',
-
-    '/submit',              'submit',
-
-#    '/ranking',            'rank',
-#    '/scoreboard/(.*)',    'board',  #   http://icpc.sharif.ir/acmicpc12/scoreboard/
-    '/status/(.+)',         'status'
-
-#    '/admin',              'admin',
-#    '/login',              'login',
-#    '/user/(.*)',          'user',
-#    '/users',              'users',
-#    '/logout',             'logout',
-#    '/register',           'register',
-
-#    '/news/(.*)',          'news',
+    '/',                'home',
+#    '/contest/(.*)',    'contest',
+#    '/problem/(.+)',    'pset',
+    '/shoot',           'shoot',
+    '/status/(.*)',     'status'
+#    '/board/(.*)',      'board', #   http://icpc.sharif.ir/acmicpc12/scoreboard/
 )
 
 class home:
     def GET(self):
         return render.home()
 
-class submit:
+class shoot:
     def GET(self):
-        return render.submit()
+        return render.shoot()
+    def POST(self):
+        i = web.input()
+        n = db.insert('test', a=int(i.b)*10, b=int(i.b))
+        raise web.seeother('/status/%s' % (i.b))
 
 class status:
     def GET(self, subid):
