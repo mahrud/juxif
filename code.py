@@ -1,5 +1,6 @@
 import os
 import web
+import jucs
 import secret
 
 db = web.database(dbn='mysql', user='root', pw=secret.pw, db='juxif')
@@ -26,23 +27,30 @@ class shoot:
     def POST(self):
         i = web.input(code={})
 
+        uid = int(i.uid) 
+        pid = int(i.pid) 
+        cid = int(i.cid)
+
         addr = '%s/source/%s' % (os.getcwd(), i.code.filename)
         code = file(addr, 'w')
         code.write(i.code.value)
         code.close()
+    
+        lang = i.lang
 
         subid = db.insert('shots', 
             # subid has AUTO_INCREMENT, 
-            uid = int(i.uid), 
-            pid = int(i.pid), 
-            cid = int(i.cid), 
+            uid = uid, 
+            pid = pid, 
+            cid = cid, 
             addr = addr, 
-            lang = i.lang,
+            lang = lang,
             mode = 0 # mode[i.cid]  #FIXME
             # created is set to CURRENT_TIMESTAMP,
             # access is updated by judge
             # modify is updated by judge)
             )
+        jucs.submit(subid, uid, pid, lang, addr)
 
         raise web.seeother('/status/%s' % (subid))
 
