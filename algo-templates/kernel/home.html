@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel=StyleSheet href="/static/css/main.css" type="text/css">
+<title>algorithms.ir</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+<script>
+	var showTooltip = function(element, tooltip){
+		document.getElementById(element).className = "tooltip_visible";
+		document.getElementById(element).innerHTML = tooltip;
+	};
+	
+	var hideTooltip = function(element) {
+		document.getElementById(element).className = "tooltip";
+	};
+</script>
+<script src="/static/js/navigation.js" type="text/javascript"></script>
+<script src="/static/js/session.js" type="text/javascript"></script>
+<script>
+	var __searchbox_active = false;
+	var __active_searchbox = function() {
+		if (!__searchbox_active) {
+			__searchbox_active = true;
+			document.getElementById("searchbox").value="";
+		}
+	};
+	var __deactive_searchbox=function() {
+		if (document.activeElement != document.getElementById("searchbox")) {
+			__searchbox_active = false;
+			document.getElementById("searchbox").value="جستجو ...";
+		}
+	};
+	var __search_request = function() {
+		alert(document.getElementById("searchbox").value);
+	};
+	var __key_handler = function(key_event) {
+		if (__searchbox_active && key_event.keyCode == 13) {
+			__search_request();
+		}
+	};
+</script>
+<script>
+	
+	var updateFunc = function() {
+		updateSessionPanel();
+		setTimeout("updateFunc();", 1000);
+	};
+
+	var loadFunc = function() {
+		document.onkeydown = __key_handler;
+		window.onbeforeunload = unloadFunc;
+		<!--sessionInit();-->
+		navigationInit();
+		setTimeout("updateFunc();", 1000);
+		correctHighlight();
+		try {
+			localStorage['clients'].length;
+			localStorage['clients'] += 'x';
+		}
+		catch(error) {
+			localStorage['clients'] = 'x';
+		}
+		
+		navigate('home');
+	};
+	
+	var unloadFunc = function(object) {
+		<!--localStorage['clients'] = localStorage['clients'].substring(1);-->
+		if (localStorage['clients'].length == 0) {
+			localStorage.removeItem('clients');
+			sessionClear();
+		}
+	};
+	
+	var reloadFunc = function() {
+		checkPage();
+		correctHighlight();
+	};
+	
+</script>
+</head>
+<body class="body" onload="loadFunc()">
+<div class="panel" id="panel">
+	<!--<p class="title">algorithms.ir</p>-->
+	<div class="nav" id="nav">
+		<img src="/static/img/whitesmall/news.png" class="nav_button" id="nav_news" onmouseover="showTooltip('panel_tooltip','خبرها');" onmouseout="hideTooltip('panel_tooltip')" onclick="navigate('news')"></img> 
+		<img src="/static/img/whitesmall/event.png" class="nav_button" id="nav_event" onmouseover="showTooltip('panel_tooltip','لیگ و مسابقات');" onmouseout="hideTooltip('panel_tooltip')" onclick="navigate('event')"></img>	
+		<img src="/static/img/whitesmall/course.png" class="nav_button" id="nav_course" onmouseover="showTooltip('panel_tooltip','درسنامه ها');" onmouseout="hideTooltip('panel_tooltip')" onclick="navigate('course')"></img>
+		<img src="/static/img/whitesmall/algorithm.png" class="nav_button" id="nav_algorithm" onmouseover="showTooltip('panel_tooltip','الگوریتم ها');" onmouseout="hideTooltip('panel_tooltip')" onclick="navigate('algorithm')"></img>
+		<img src="/static/img/whitesmall/problem.png" class="nav_button" id="nav_problem" onmouseover="showTooltip('panel_tooltip','مساله ها');" onmouseout="hideTooltip('panel_tooltip')" onclick="navigate('problem')"></img>
+		<img src="/static/img/whitesmall/profile.png" class="nav_button" id="nav_profile" onmouseover="showTooltip('panel_tooltip','پروفایل');" onmouseout="hideTooltip('panel_tooltip')" onclick="navigate('profile')"></img>
+		<img src="/static/img/whitesmall/home.png" class="nav_button" id="nav_home" onmouseover="showTooltip('panel_tooltip','خانه');" onmouseout="hideTooltip('panel_tooltip')" onclick="navigate('home')"></img>
+	</div>
+	
+	<div class="session_invis" id="session">
+		<b class="session_uname" id="session_uname"></b>
+		<input type="button" class="session_notifier" value="2"/>
+		<img src="/static/img/whitesmall/log off.png" class="nav_button" id="session_log_off" onclick="sessionLogoff();"></img>
+		<img src="/static/img/whitesmall/cool.png" class="nav_button" id="session_coolmeters"></img>
+	</div>
+	
+	<div class="extpanel" id="extpanel">
+		<img src="/static/img/whitesmall/log in.png" class="nav_button" id="session_log_in" onclick="navigate('login');"></img>
+		<img src="/static/img/whitesmall/signup.png" class="nav_button" id="session_sign_up" onclick="navigate('register');"></img>
+	</div>
+</div>
+<input type="text" id="searchbox" value="جستجو ..." class="panel_searchbox" 
+			onclick="__active_searchbox();" onblur="__deactive_searchbox();"/>
+<section id="main section" class="main_section">
+</section>
+<p class="tooltip" id="panel_tooltip">tooltip!!</p>
+
+<footer class="copyright">
+	<p>copyright (c) 2011 algorithms.ir</p>
+</footer>
+</body>
+</html>

@@ -2,19 +2,34 @@ import os
 import web
 import jucs
 import secret
+from web.contrib.template import render_jinja
 
 db = web.database(dbn='mysql', user='root', pw=secret.pw, db='juxif')
 
-render = web.template.render('templates/', base='layout')
-
 urls = (
-    '/',                'home',
+    '/',                'index',
+	'/home',			'home',
 #    '/contest/(.*)',    'contest',
 #    '/problem/(.+)',    'pset',
     '/shoot',           'shoot',
     '/status/(.*)',     'status'
 #    '/board/(.*)',      'board', # http://icpc.sharif.ir/acmicpc12/scoreboard/
 )
+
+render = render_jinja(
+       'templates/kernel',            # Set template directory.
+        encoding = 'utf-8',    # Encoding.
+    )
+
+# Add/override some global functions.
+render._lookup.globals.update(
+	STATIC_URL='/static/'
+	)
+
+
+class index:
+    def GET(self):
+        return render.index()
 
 class home:
     def GET(self):

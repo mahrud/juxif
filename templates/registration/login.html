@@ -1,0 +1,18 @@
+<article class="content" id="login">
+	<input type="hidden" id="page" value="login"></input>
+	<section>
+	<article class="form">
+			<p><b>  اسم کاربری : </b><input type="text" id="id_username" value="{{ username}}"/></p>
+			<p><b>  رمز عبور : </b><input type="password" id="id_password" value=""/></p>
+            <p><b><a href="{% url auth_password_reset %}"> رمز عبور رو یادم رفته :( </a></b></p>
+			<br/>
+			<p><b><input type="checkbox" id="stay">بعد از خروج log off نکن</input></b><p>
+			<br/>
+			<p><input type="button" id="login_confirm" value="ورود" onclick="__login();"/></p>
+			<br/>
+            <span id="alert"></span>
+			<br/>
+			<br/>
+	</article>
+	</section>
+</article>

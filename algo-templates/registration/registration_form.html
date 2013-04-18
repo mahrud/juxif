@@ -1,0 +1,16 @@
+{% load i18n %}
+
+<article class="content" id="register">
+	<input type="hidden" id="page" value="register"></input>
+	<section>
+	<article class="form">
+		<form method="post" action="/accounts/register/" id="inputArea">
+          {% csrf_token %}
+          {{ form }}
+          <input type="submit" value={% trans "register" %}/> <!-- onclick="__register();"/> -->
+        </form>
+     </article>
+	</section>
+</article>
+
+

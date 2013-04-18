@@ -1,0 +1,30 @@
+$def with (data)
+$var title: Status
+$var style: old
+
+<div id="content" class="default">
+<table cellpadding="0" cellspacing="0" class="default">
+<tbody>
+    <tr class="zero">
+        <th class="leftmost">#</th>
+        <th>user</th>
+        <th>problem</th>
+        <th>lang</th>
+        <th>date</th> 
+        <th>status</th>
+        <th>time</th>
+        <th>mem</th>
+    </tr>
+$for x in data:
+    <tr class="odd">
+        <td><a href="/status/$x.subid">$x.subid</a></td>
+        <td><a href="/user/$x.uid">$x.uid</a></td>
+        <td><a href="/pset/$x.pid">$x.pid</a></td>
+        <td>$x.lang</td>
+        <td>$x.created</td>
+        <td><a href="/status/$x.subid" class="unreal">stat</a></td>
+        <td>time</td>
+        <td>mem</td>
+    </tr>
+</tbody></table>
+</div
