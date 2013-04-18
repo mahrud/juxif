@@ -11,7 +11,7 @@ var correctHighlight = function() {
 	doc.getElementById("nav_event").src = "/static/img/whitesmall/event.png";
 	doc.getElementById("nav_news").src = "/static/img/whitesmall/news.png";
 	
-	doc.getElementById("session_log_in").src = "/static/img/whitesmall/log in.png";
+	doc.getElementById("session_log_in").src = "/static/img/whitesmall/log-in.png";
     doc.getElementById("session_sign_up").src = "/static/img/whitesmall/signup.png";
 	
 	if (page == "home") doc.getElementById("nav_home").src = "/static/img/orangesmall/home.png";
@@ -22,7 +22,7 @@ var correctHighlight = function() {
 	if (page == "event") doc.getElementById("nav_event").src = "/static/img/orangesmall/event.png";
 	if (page == "news") doc.getElementById("nav_news").src = "/static/img/orangesmall/news.png";
 	
-	if (page == "login") doc.getElementById("session_log_in").src = "/static/img/orangesmall/log in.png";
+	if (page == "login") doc.getElementById("session_log_in").src = "/static/img/orangesmall/log-in.png";
     if (page == "register") doc.getElementById("session_sign_up").src = "/static/img/orangesmall/signup.png";
 
 };

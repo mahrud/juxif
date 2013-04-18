@@ -5,27 +5,42 @@
 	<center>
 	<section class="content_buttondiv">
 	<div class="content_minidiv" id="A">
-	<div class="content_miniminidiv">
-	<img src="{{ STATIC_URL }}img/bigblack/problem.png" class="content_bigbutton" id="probs" 
-		onmouseover="showTooltip('home_tooltip','مساله ها')" onmouseout="hideTooltip('home_tooltip')" onclick="navigate('problem')"> </img>
-	</div> <br/><br/><div class="content_miniminidiv">
-		<img src="{{ STATIC_URL }}img/bigblack/event.png" class="content_bigbutton" id="events"
-			onmouseover="showTooltip('home_tooltip','مسابقات و لیگ')" onmouseout="hideTooltip('home_tooltip')" onclick="navigate('event');"> </img>
+	    <div class="content_miniminidiv">
+        	<img src="{{ STATIC_URL }}img/bigblack/problem.png" class="content_bigbutton" id="probs" 
+	            onmouseover="showTooltip('home_tooltip','مساله ها')"
+                onmouseout="hideTooltip('home_tooltip')"
+                onclick="navigate('problem')">
+            </img>
+	    </div>
+        <br/><br/>
+        <div class="content_miniminidiv">
+		    <img src="{{ STATIC_URL }}img/bigblack/event.png" class="content_bigbutton" id="events"
+			    onmouseover="showTooltip('home_tooltip','مسابقات و لیگ')"
+                onmouseout="hideTooltip('home_tooltip')"
+                onclick="navigate('event');">
+            </img>
 		</div>
-		</div>
-		<div class="content_minidiv" id="B">
+	</div>
+	<div class="content_minidiv" id="B">
 		<div class="content_miniminidiv">
-		<img src="{{ STATIC_URL }}img/bigblack/algorithm.png" class="content_bigbutton" id="algs" 
-			onmouseover="showTooltip('home_tooltip','الگوریتم ها')" onmouseout="hideTooltip('home_tooltip')" onclick="navigate('algorithm');"> </img>
+	    	<img src="{{ STATIC_URL }}img/bigblack/algorithm.png" class="content_bigbutton" id="algs" 
+		    	onmouseover="showTooltip('home_tooltip','الگوریتم ها')"
+                onmouseout="hideTooltip('home_tooltip')"
+                onclick="navigate('algorithm');">
+            </img>
 		</div>
-		<br/><br/>
+		<br /><br />
 		<div class="content_miniminidiv">
-		<img src="{{ STATIC_URL }}img/bigblack/course.png" class="content_bigbutton" id="courses"
-			onmouseover="showTooltip('home_tooltip','درسنامه ها')" onmouseout="hideTooltip('home_tooltip')" onclick="navigate('course');"> </img>
+    		<img src="{{ STATIC_URL }}img/bigblack/course.png" class="content_bigbutton" id="courses"
+	    		onmouseover="showTooltip('home_tooltip','درسنامه ها')"
+                onmouseout="hideTooltip('home_tooltip')"
+                onclick="navigate('course');">
+            </img>
 		</div>
-		</div>
-				<br/>
-				<p class="tooltip" id="home_tooltip">salam</p>
-		</section>
-		</center>
+	</div>
+	<div class="tooltip">
+    	<p class="tooltip" id="home_tooltip"></p>
+    </div>
+	</section>
+	</center>
 </article>

@@ -44,14 +44,14 @@
 }
 
 .content header {
-	font-family:Tahoma;
+	font-family: persian-modern, Tahoma;
 	font-weight:bold;
 	font-size:24px;
 	top: 64px;
 	position: relative;
 }
 .content article {
-	font-family: Tahoma;
+	font-family: persian-modern,  Tahoma;
 	font-size: 14px;
 	position: relative;
 	top: 50%;
@@ -89,8 +89,8 @@
 }
 
 .content_bigbutton:hover {
-	width:216px;
-	height:216px;
+	width:200px;
+	height:200px;
 }
 
 .content_bigbutton#probs { }
@@ -101,10 +101,8 @@
 .content_buttondiv {
 	width: 490px;
 	height: 512px;
-    position: absolute;
-    margin: -245px 0 0 -256px;
-    top: 50%;
-    left: 50%;
+    position: relative;
+    top: 35px;
 }
 
 .content_minidiv {
@@ -128,7 +126,7 @@
 .content_minidiv#B { float: right; }
 
 .tooltip {
-	font-family:Tahoma;
+	font-family: persian-modern, Tahoma;
 	color:rgba(0, 0, 0, 0.0);
 	font-weight:bold;
 	font-size:14px;
@@ -138,6 +136,8 @@
 	-o-transition: color 0.2s ease-in-out;
 	-ms-transition: color 0.2s ease-in-out;
 	transition:  color 0.2s ease-in-out; 
+    
+    clear: both;
 }
 
 .tooltip#panel_tooltip {
@@ -145,7 +145,7 @@
 }
 
 .tooltip_visible {
-	font-family:Tahoma;
+	font-family: persian-modern, Tahoma;
 	color:rgba(0, 0, 0, 0.5);
 	font-weight:bold;
 	font-size:14px;
@@ -190,7 +190,7 @@
 	transition:  background 0.5s ease-in-out,color 0.5s ease-in;
 	
 	background:rgba(0,0,0,0.7);
-	font-family:Tahoma;
+	font-family: persian-modern, Tahoma;
 	font-weight:bold;
 	font-size:14px;
 	color:white;
@@ -208,7 +208,7 @@
 	background:rgba(0,0,0,0.9);
 }
 
-.form input[type="button"]:active, #inputArea input[type="submit"]:active{
+.form input[type="button"]:active, #inputArea input[type="submit"]:active {
 	-webkit-transition:  color 0s ease-in;
 	-moz-transition:  color 0s ease-in;
 	-o-transition: color 0s ease-in;
