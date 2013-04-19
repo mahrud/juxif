@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel=StyleSheet href="{{ STATIC_URL }}css/main.css" type="text/css">
     <title>algorithms.ir</title>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>
     	var showTooltip = function(element, tooltip){
     		document.getElementById(element).className = "tooltip_visible";
@@ -85,69 +85,67 @@
 	<!--<p class="title">algorithms.ir</p>-->
 	<div class="nav" id="nav">
 		<img src="{{ STATIC_URL }}img/whitesmall/news.png" class="nav_button" id="nav_news"
-            onmouseover="showTooltip('panel_tooltip','خبرها');"
-            onmouseout="hideTooltip('panel_tooltip')"
+            onmouseover="showTooltip('right_tooltip','خبر ها');"
+            onmouseout="hideTooltip('right_tooltip')"
             onclick="navigate('news')">
-        </img> 
 		<img src="{{ STATIC_URL }}img/whitesmall/event.png" class="nav_button" id="nav_event"
-            onmouseover="showTooltip('panel_tooltip','لیگ و مسابقات');"
-            onmouseout="hideTooltip('panel_tooltip')"
+            onmouseover="showTooltip('right_tooltip','لیگ و مسابقات');"
+            onmouseout="hideTooltip('right_tooltip')"
             onclick="navigate('event')">
-        </img>	
 		<img src="{{ STATIC_URL }}img/whitesmall/course.png" class="nav_button" id="nav_course"
-            onmouseover="showTooltip('panel_tooltip','درسنامه ها');"
-            onmouseout="hideTooltip('panel_tooltip')"
+            onmouseover="showTooltip('right_tooltip','درسنامه ها');"
+            onmouseout="hideTooltip('right_tooltip')"
             onclick="navigate('course')">
-        </img>
 		<img src="{{ STATIC_URL }}img/whitesmall/algorithm.png" class="nav_button" id="nav_algorithm"
-            onmouseover="showTooltip('panel_tooltip','الگوریتم ها');"
-            onmouseout="hideTooltip('panel_tooltip')"
+            onmouseover="showTooltip('right_tooltip','الگوریتم ها');"
+            onmouseout="hideTooltip('right_tooltip')"
             onclick="navigate('algorithm')">
-        </img>
 		<img src="{{ STATIC_URL }}img/whitesmall/problem.png" class="nav_button" id="nav_problem"
-            onmouseover="showTooltip('panel_tooltip','مساله ها');"
-            onmouseout="hideTooltip('panel_tooltip')"
+            onmouseover="showTooltip('right_tooltip','مساله ها');"
+            onmouseout="hideTooltip('right_tooltip')"
             onclick="navigate('problem')">
-        </img>
 		<img src="{{ STATIC_URL }}img/whitesmall/profile.png" class="nav_button" id="nav_profile"
-            onmouseover="showTooltip('panel_tooltip','پروفایل');"
-            onmouseout="hideTooltip('panel_tooltip')"
+            onmouseover="showTooltip('right_tooltip','پروفایل');"
+            onmouseout="hideTooltip('right_tooltip')"
             onclick="navigate('profile')">
-        </img>
 		<img src="{{ STATIC_URL }}img/whitesmall/home.png" class="nav_button" id="nav_home"
-            onmouseover="showTooltip('panel_tooltip','خانه');"
-            onmouseout="hideTooltip('panel_tooltip')"
+            onmouseover="showTooltip('right_tooltip','خانه');"
+            onmouseout="hideTooltip('right_tooltip')"
             onclick="navigate('home')">
-        </img>
 	</div>
 	
 	<div class="session_invis" id="session">
 		<b class="session_uname" id="session_uname"></b>
 		<input type="button" class="session_notifier" value="2"/>
 		<img src="{{ STATIC_URL }}img/whitesmall/log-off.png" class="nav_button" id="session_log_off"
+            onmouseover="showTooltip('left_tooltip','خروج');"
+            onmouseout="hideTooltip('left_tooltip')"
             onclick="sessionLogoff();">
-        </img>
 		<img src="{{ STATIC_URL }}img/whitesmall/cool.png" class="nav_button" id="session_coolmeters"
-            onclick="">
-        </img>
+            onmouseover="showTooltip('left_tooltip','این رو درست کن!');"
+            onmouseout="hideTooltip('left_tooltip')"
+            onclick=";">
 	</div>
 	
 	<div class="extpanel" id="extpanel">
 		<img src="{{ STATIC_URL }}img/whitesmall/log-in.png" class="nav_button" id="session_log_in"
+            onmouseover="showTooltip('left_tooltip','ورود');"
+            onmouseout="hideTooltip('left_tooltip')"
             onclick="navigate('login');">
-        </img>
    		<img src="{{ STATIC_URL }}img/whitesmall/signup.png" class="nav_button" id="session_sign_up"
+            onmouseover="showTooltip('left_tooltip','ثبت نام');"
+            onmouseout="hideTooltip('left_tooltip')"
             onclick="navigate('register');">
-        </img>
 	</div>
 </div>
 <input type="text" id="searchbox" value="جستجو ..." class="panel_searchbox" 
     onclick="__active_searchbox();"
     onblur="__deactive_searchbox();"/>
 
-<section id="main section" class="main_section"></section>
+<section id="main_section" class="main_section"></section>
 
-<p class="tooltip" id="panel_tooltip">tooltip!!</p>
+<p class="tooltip" id="right_tooltip"></p>
+<p class="tooltip" id="left_tooltip"></p>
 
 <footer class="copyright">
 	<p>Copyright (c) 2011-2013 algorithms.ir</p>

@@ -140,7 +140,10 @@
     clear: both;
 }
 
-.tooltip#panel_tooltip {
+.tooltip#right_tooltip {
+	font-size:12px;
+}
+.tooltip#left_tooltip {
 	font-size:12px;
 }
 
@@ -157,7 +160,11 @@
 	transition:  color 0.2s ease-in-out; 
 }
 
-.tooltip_visible#panel_tooltip {
+.tooltip_visible#right_tooltip {
+	font-size:12px;
+	color:rgba(0, 0, 0, 0.8);
+}
+.tooltip_visible#left_tooltip {
 	font-size:12px;
 	color:rgba(0, 0, 0, 0.8);
 }

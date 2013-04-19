@@ -61,12 +61,12 @@ var navigate = function(dest) {
     // Using jQuery's ajax method since it automatically sets the HTTP_X_REQUESTED_WITH header so that
     // we can determine ajax requests in views via the request.is_ajax method
     $.get(navigation_map(dest), function(data){
-        doc.getElementById("main section").innerHTML = data;
+        doc.getElementById("main_section").innerHTML = data;
     });
 //	xmlhttp = new XMLHttpRequest();
 //	xmlhttp.open("GET", navigation_map(dest), false);
 //	xmlhttp.send();
-//	doc.getElementById("main section").innerHTML = xmlhttp.responseText;
+//	doc.getElementById("main_section").innerHTML = xmlhttp.responseText;
     
 	checkupPage();
 	correctHighlight();

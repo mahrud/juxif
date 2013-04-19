@@ -15,7 +15,6 @@
 	text-align: center;
 	background-image: url('../img/stdback.png');
 	background-repeat: repeat;
-    clear: both;
 }
 .panel {
     font-family: persian-modern, Arial, Helvetica, sans-serif;
@@ -178,7 +177,7 @@
 	font-size: 14px;
 	font-weight: bold;
 }
-.session_notifier{
+.session_notifier {
 	font-family: persian-modern, Arial, Helvetica, sans-serif;
 	background: solid;
 	background-color: rgba(255, 130, 0, 0.8);
@@ -215,14 +214,24 @@
 	vertical-align:middle;
 }
 
-.tooltip#panel_tooltip{
+.tooltip#right_tooltip {
 	position:absolute;
 	right:16px;
 	top:20px;
 }
+.tooltip#left_tooltip {
+	position:absolute;
+	left:16px;
+	top:20px;
+}
 
-.tooltip_visible#panel_tooltip{
+.tooltip_visible#right_tooltip {
 	right:16px;
+	top:20px;
+	position:absolute;
+}
+.tooltip_visible#left_tooltip {
+	left:16px;
 	top:20px;
 	position:absolute;
 }

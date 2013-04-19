@@ -120,7 +120,7 @@ var updateSessionPanel = function() {
 //    $.post(navigation_map("register"),
 //	   $("#inputArea").serialize(),
 //	  function(data){
-//	    document.getElementById("main section").innerHTML = data;
+//	    document.getElementById("main_section").innerHTML = data;
 //          alert(data);
 //	    checkupPage();
 //	    correctHighlight();
