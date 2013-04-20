@@ -1,0 +1,68 @@
+.content article {
+	font-family: persian-modern,  Tahoma;
+	font-size: 14px;
+	position: relative;
+	top: 50%;
+}
+
+.bigblock {
+	width: 490px;
+	height: 512px;
+    position: relative;
+    top: 35px;
+}
+
+.column {
+	width: 230px;
+	height:512px;
+
+	display: block;
+}
+
+.column#left {
+    float: left;
+}
+
+.column#right {
+    float: right;
+}
+
+.block {
+	width: 224px;
+	height: 224px;
+
+	display: table-cell;
+	background:rgba(255, 255, 255, 0.5);
+	vertical-align:middle;
+	border-radius:15px;
+}
+
+.button {
+	width: 192px;
+	height: 192px; 
+	
+	-webkit-transition: width 0.5s ease-in-out, 
+				height 0.5s ease-in-out, 
+				left 0.5s ease-in-out, 
+				top 0.5s ease-in-out,
+				right 0.5s ease-in-out;
+	transition:  width 0.5s ease-in-out, 
+				height 0.5s ease-in-out, 
+				left 0.5s ease-in-out, 
+				top 0.5s ease-in-out,
+				right 0.5s ease-in-out;
+}
+
+.button:hover {
+	width:200px;
+	height:200px;
+}
+
+.button#problem {
+}
+.button#algorithm {
+}
+.button#contest {
+}
+.button#course {
+}

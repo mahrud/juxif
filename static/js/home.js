@@ -1,12 +1,13 @@
-/////////// Tool Tip Show/Hide
+/////////// Show/Hide
 
-var showTooltip = function(element, tooltip){
-    document.getElementById(element).className = "tooltip_visible";
-    document.getElementById(element).innerHTML = tooltip;
+function showTooltip(element, message) {
+    document.getElementById(element).style.opacity = 0.6;
+    document.getElementById(element).innerHTML = message;
 };
 
-var hideTooltip = function(element) {
-    document.getElementById(element).className = "tooltip";
+function hideTooltip(element) {
+    document.getElementById(element).style.opacity = 0;
+    document.getElementById(element).innerHTML = '';
 };
 
 

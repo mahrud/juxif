@@ -2,12 +2,12 @@ $def with (content)
 <!DOCTYPE HTML>
 <html>
 <head>
-    <meta http-equiv='content-type'     content="text/html; charset=charset=UTF-8" />
-    <meta http-equiv='content-language' content='en-US' />
+    <meta http-equiv='content-type'     content="text/html; charset=charset=UTF-8">
+    <meta http-equiv='content-language' content='en-US'>
 
-    <link rel='icon'        href="/static/img/favicon.png"     type='image/x-icon' />
-    <link rel='stylesheet'  href="/static/css/main.css" type="text/css">
-    <link rel='copyright'   href="http://www.gnu.org/licenses/gpl.html" />
+    <link rel='icon'        href="/static/img/favicon.png"     type='image/x-icon'>
+    <link rel='stylesheet'  href="/static/css/style.css" type="text/css">
+    <link rel='copyright'   href="http://www.gnu.org/licenses/gpl.html">
 
     <title>$content.title</title>
 
@@ -18,76 +18,76 @@ $def with (content)
 <!--<script type="text/javascript"> navigate("page") </script>--!>
 </head>
 
-<body class="body">
-<div class="panel" id="panel">
-    <div class="nav" id="nav">
-        <img src="/static/img/whitesmall/news.png" class="nav_button" id="nav_news"
+<body>
+<div id="panel">
+    <div id="navbar">
+        <img src="/static/img/whitesmall/news.png" class="navbar_button" id="navbar_news"
             onmouseover="showTooltip('right_tooltip','خبر ها');"
             onmouseout="hideTooltip('right_tooltip')"
-            onclick="navigate('news')">
-        <img src="/static/img/whitesmall/contest.png" class="nav_button" id="nav_event"
+            onclick="navigate('news')" >
+        <img src="/static/img/whitesmall/contest.png" class="navbar_button" id="navbar_event"
             onmouseover="showTooltip('right_tooltip','لیگ و مسابقات');"
             onmouseout="hideTooltip('right_tooltip')"
-            onclick="navigate('contest')">
-        <img src="/static/img/whitesmall/course.png" class="nav_button" id="nav_course"
+            onclick="navigate('contest')" >
+        <img src="/static/img/whitesmall/course.png" class="navbar_button" id="navbar_course"
             onmouseover="showTooltip('right_tooltip','درسنامه ها');"
             onmouseout="hideTooltip('right_tooltip')"
-            onclick="navigate('course')">
-        <img src="/static/img/whitesmall/algorithm.png" class="nav_button" id="nav_algorithm"
+            onclick="navigate('course')" >
+        <img src="/static/img/whitesmall/algorithm.png" class="navbar_button" id="navbar_algorithm"
             onmouseover="showTooltip('right_tooltip','الگوریتم ها');"
             onmouseout="hideTooltip('right_tooltip')"
-            onclick="navigate('algorithm')">
-        <img src="/static/img/whitesmall/problem.png" class="nav_button" id="nav_problem"
+            onclick="navigate('algorithm')" >
+        <img src="/static/img/whitesmall/problem.png" class="navbar_button" id="navbar_problem"
             onmouseover="showTooltip('right_tooltip','مساله ها');"
             onmouseout="hideTooltip('right_tooltip')"
-            onclick="navigate('problem')">
-        <img src="/static/img/whitesmall/profile.png" class="nav_button" id="nav_profile"
+            onclick="navigate('problem')" >
+        <img src="/static/img/whitesmall/profile.png" class="navbar_button" id="navbar_profile"
             onmouseover="showTooltip('right_tooltip','پروفایل');"
             onmouseout="hideTooltip('right_tooltip')"
-            onclick="navigate('profile')">
-        <img src="/static/img/whitesmall/home.png" class="nav_button" id="nav_home"
+            onclick="navigate('profile')" >
+        <img src="/static/img/whitesmall/home.png" class="navbar_button" id="navbar_home"
             onmouseover="showTooltip('right_tooltip','خانه');"
             onmouseout="hideTooltip('right_tooltip')"
-            onclick="navigate('home')">
+            onclick="navigate('home')" >
     </div>
     
-    <div class="session_invis" id="session">
-        <b class="session_uname" id="session_uname"></b>
-        <input type="button" class="session_notifier" value="2"/>
-        <img src="/static/img/whitesmall/logout.png" class="nav_button" id="nav_logout"
+    <div id="session">
+        <img src="/static/img/whitesmall/logout.png" class="navbar_button" id="navbar_logout"
             onmouseover="showTooltip('left_tooltip','خروج');"
             onmouseout="hideTooltip('left_tooltip')"
-            onclick="sessionLogoff();">
-        <img src="/static/img/whitesmall/cool.png" class="nav_button" id="session_coolmeters"
+            onclick="sessionLogoff();" >
+        <img src="/static/img/whitesmall/cool.png" class="navbar_button" id="session_coolmeters"
             onmouseover="showTooltip('left_tooltip','این رو درست کن!');"
             onmouseout="hideTooltip('left_tooltip')"
-            onclick=";">
+            onclick=";" >
+        <input id="session_notifier" type="button" value="2">
+        <b id="session_uname"></b>
     </div>
     
-    <div class="extpanel" id="extpanel">
-        <img src="/static/img/whitesmall/login.png" class="nav_button" id="nav_login"
+    <div id="extpanel">
+        <img src="/static/img/whitesmall/login.png" class="navbar_button" id="navbar_login"
             onmouseover="showTooltip('left_tooltip','ورود');"
             onmouseout="hideTooltip('left_tooltip')"
-            onclick="navigate('login');">
-        <img src="/static/img/whitesmall/register.png" class="nav_button" id="nav_register"
+            onclick="navigate('login');" >
+        <img src="/static/img/whitesmall/register.png" class="navbar_button" id="navbar_register"
             onmouseover="showTooltip('left_tooltip','ثبت نام');"
             onmouseout="hideTooltip('left_tooltip')"
-            onclick="navigate('register');">
+            onclick="navigate('register');" >
     </div>
 </div>
 
-<input type="text" id="searchbox" value="جستجو ..." class="panel_searchbox" 
+<input id="searchbox" type="text" value="جستجو ..."
     onclick="__active_searchbox();"
     onblur="__deactive_searchbox();" >
 
-<section id="main_section" class="main_section">
+<section id="content" class="content">
     $:content
 </section>
 
 <p class="tooltip" id="right_tooltip"></p>
 <p class="tooltip" id="left_tooltip"></p>
 
-<footer class="copyright">
+<footer id="copyright">
     <p>Copyright (c) 2011-2013 algorithms.ir</p>
 </footer>
 

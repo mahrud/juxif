@@ -92,13 +92,13 @@ class status:
             if id:
                 where = 'subid=%s' % (id)
             query = db.select('shots', what='subid,uid,pid,cid,addr,lang,created', where=where)
-            return contest_render.status(query)
+            return algorithm_render.status(query)
 
         elif section == "problem":
             if id:
                 where = 'pid=%s' % (id)
             query = db.select('shots', what='subid,uid,pid,cid,addr,lang,created', where=where)
-            return contest_render.status(query)
+            return problem_render.status(query)
 
         elif section == "contest":
             if id:
@@ -110,7 +110,17 @@ class status:
 
 class shoot:
     def GET(self):
-        return algorithm_render.shoot()
+        section = web.url().split('/')[1]
+
+        if section == "algorithm":
+            return algorithm_render.shoot()
+        elif section == "problem":
+            return problem_render.shoot()
+        elif section == "contest":
+            return contest_render.shoot()
+
+
+        return render.err404()
 
     def POST(self):
         section = web.url().split('/')[1]
