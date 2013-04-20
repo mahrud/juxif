@@ -13,7 +13,7 @@
 }
 .body {
 	text-align: center;
-	background-image: url('../img/stdback.png');
+	background-image: url('/static/img/stdback.png');
 	background-repeat: repeat;
 }
 .panel {
@@ -149,7 +149,7 @@
 	text-align: left;
 	visibility: visible;
 	position: absolute;
-	top: 16px;
+	top: 0px;
 	margin-top:4px;
 	left: 16px;
 	width: 50%;

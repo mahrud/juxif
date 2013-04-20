@@ -1,47 +1,5 @@
-var page;
-
-var correctHighlight = function() {
-	var doc = document;
-	
-	doc.getElementById("nav_home").src = "/static/img/whitesmall/home.png";
-	doc.getElementById("nav_profile").src = "/static/img/whitesmall/profile.png";
-	doc.getElementById("nav_problem").src = "/static/img/whitesmall/problem.png";
-	doc.getElementById("nav_algorithm").src = "/static/img/whitesmall/algorithm.png";
-	doc.getElementById("nav_course").src = "/static/img/whitesmall/course.png";
-	doc.getElementById("nav_event").src = "/static/img/whitesmall/event.png";
-	doc.getElementById("nav_news").src = "/static/img/whitesmall/news.png";
-	
-	doc.getElementById("session_log_in").src = "/static/img/whitesmall/log-in.png";
-    doc.getElementById("session_sign_up").src = "/static/img/whitesmall/signup.png";
-	
-	if (page == "home") doc.getElementById("nav_home").src = "/static/img/orangesmall/home.png";
-	if (page == "profile") doc.getElementById("nav_profile").src = "/static/img/orangesmall/profile.png";
-	if (page == "problem") doc.getElementById("nav_problem").src = "/static/img/orangesmall/problem.png";
-	if (page == "algorithm") doc.getElementById("nav_algorithm").src = "/static/img/orangesmall/algorithm.png";
-	if (page == "course") doc.getElementById("nav_course").src = "/static/img/orangesmall/course.png";
-	if (page == "event") doc.getElementById("nav_event").src = "/static/img/orangesmall/event.png";
-	if (page == "news") doc.getElementById("nav_news").src = "/static/img/orangesmall/news.png";
-	
-	if (page == "login") doc.getElementById("session_log_in").src = "/static/img/orangesmall/log-in.png";
-    if (page == "register") doc.getElementById("session_sign_up").src = "/static/img/orangesmall/signup.png";
-
-};
-
-var navigationInit = function() {
-	navigate('home');
-};
-
-var checkPage = function() {
-	//setTimeout("checkupPage();", 100);
-	checkupPage();
-};
-
-var ends_with = function(a, b) {
-	if (a.length < b.length) return false;
-	return a.substring(a.length - b.length) == b;
-}
-
-var checkupPage = function() {
+function navbar()
+{
 	var addr;
 	try {
 		addr = document.getElementById("page").value;
@@ -50,32 +8,85 @@ var checkupPage = function() {
 		//oops, there are some security problems not letting us access, so...
 		addr = 'none';
 	}
-	page = addr;
+	var page = addr;
 	correctHighlight();
+
+	document.getElementById("nav_home").src = "/static/img/whitesmall/home.png";
+	document.getElementById("nav_profile").src = "/static/img/whitesmall/profile.png";
+	document.getElementById("nav_problem").src = "/static/img/whitesmall/problem.png";
+	document.getElementById("nav_algorithm").src = "/static/img/whitesmall/algorithm.png";
+	document.getElementById("nav_course").src = "/static/img/whitesmall/course.png";
+	document.getElementById("nav_event").src = "/static/img/whitesmall/event.png";
+	document.getElementById("nav_news").src = "/static/img/whitesmall/news.png";
+	document.getElementById("nav_login").src = "/static/img/whitesmall/login.png";
+    document.getElementById("nav_register").src = "/static/img/whitesmall/register.png";
+	
+	if (page == "home")
+        document.getElementById("nav_home").src = "/static/img/orangesmall/home.png";
+	if (page == "profile")
+        document.getElementById("nav_profile").src = "/static/img/orangesmall/profile.png";
+	if (page == "problem")
+        document.getElementById("nav_problem").src = "/static/img/orangesmall/problem.png";
+	if (page == "algorithms")
+        document.getElementById("nav_algorithm").src = "/static/img/orangesmall/algorithm.png";
+	if (page == "course")
+        document.getElementById("nav_course").src = "/static/img/orangesmall/course.png";
+	if (page == "event")
+        document.getElementById("nav_event").src = "/static/img/orangesmall/event.png";
+	if (page == "news")
+        document.getElementById("nav_news").src = "/static/img/orangesmall/news.png";
+	if (page == "login")
+        document.getElementById("nav_login").src = "/static/img/orangesmall/login.png";
+    if (page == "register")
+        document.getElementById("nav_register").src = "/static/img/orangesmall/register.png";
 };
 
-var navigate = function(dest) {
-	var doc = document;
-	page = dest;
+function navigate(dest)
+{
+//  page = dest;
 
-    // Using jQuery's ajax method since it automatically sets the HTTP_X_REQUESTED_WITH header so that
-    // we can determine ajax requests in views via the request.is_ajax method
-    $.get(navigation_map(dest), function(data){
-        doc.getElementById("main_section").innerHTML = data;
-    });
-//	xmlhttp = new XMLHttpRequest();
-//	xmlhttp.open("GET", navigation_map(dest), false);
-//	xmlhttp.send();
-//	doc.getElementById("main_section").innerHTML = xmlhttp.responseText;
-    
-	checkupPage();
-	correctHighlight();
+// Using jQuery's ajax method since it automatically sets the HTTP_X_REQUESTED_WITH header so that
+// we can determine ajax requests in views via the request.is_ajax method
+//  $.get(nav_map(dest), 
+//      function(data) {
+//          document.getElementById("main_section").innerHTML = data;
+//          document.write(data);
+//      }
+//  );
+//  navbar();
+  
+    window.location = "/"+nav_map(dest);
 };
 
-var navigation_map = function(dest_id) {
-	if (dest_id == "home") return "home";
-	if (dest_id == "login") return "accounts/login";
-    if (dest_id == "register") return "accounts/register";
-    if (dest_id == "news") return "news";
-	return  "notfound";
+
+function nav_map(dest)
+{
+    if (dest == "home")
+        return "";
+
+    if (dest == "admin")
+        return "admin";
+    if (dest == "news")
+        return "news";
+
+    if (dest == "course")
+        return "course";
+    if (dest == "article")
+        return "article";
+
+    if (dest == "algorithm")
+        return "algorithm";
+    if (dest == "problem")
+        return "problem";
+    if (dest == "contest")
+        return "contest";
+
+    if (dest == "register")
+        return "accounts/register";
+    if (dest == "logout")
+        return "accounts/logout";
+    if (dest == "login")
+        return "accounts/login";
+
+    return  "four-oh-four";
 };

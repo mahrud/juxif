@@ -8,7 +8,7 @@
     text-decoration:none;
 }
 .content#home{
-	background-image: url('../img/stdback.png');
+	background-image: url('/static/img/stdback.png');
 	background-repeat: repeat;
 	position:absolute;
 	left:0px;
@@ -19,7 +19,7 @@
 	height:auto;
 }
 .content#login{
-	background-image: url('../img/stdback.png');
+	background-image: url('/static/img/stdback.png');
 	background-repeat: repeat;
 	
 	position:absolute;
@@ -31,7 +31,7 @@
 	margin-top:-200px;
 }
 .content#register{
-	background-image: url('../img/stdback.png');
+	background-image: url('/static/img/stdback.png');
 	background-repeat: repeat;
 
 	position:absolute;

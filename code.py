@@ -2,44 +2,119 @@ import os
 import web
 import jucs
 import secret
-from web.contrib.template import render_jinja
 
 db = web.database(dbn='mysql', user='root', pw=secret.pw, db='juxif')
 
+render = web.template.render('templates/', base='layout')
+
+course_render = web.template.render('templates/course/', base='../layout')
+#article_render = web.template.render('templates/article/', base='../layout')
+
+algorithm_render = web.template.render('templates/algorithm/', base='../layout')
+problem_render = web.template.render('templates/problem/', base='../layout')
+contest_render = web.template.render('templates/contest/', base='../layout')
+
+#accounts_render = web.template.render('templates/accounts/', base='../layout')
+
 urls = (
-    '/',                'index',
-	'/home',			'home',
-#    '/contest/(.*)',    'contest',
-#    '/problem/(.+)',    'pset',
-    '/shoot',           'shoot',
-    '/status/(.*)',     'status'
-#    '/board/(.*)',      'board', # http://icpc.sharif.ir/acmicpc12/scoreboard/
+    '/?',                       'home',
+#   '/admin',                   'admin',
+#   '/news/?',                  'news',
+#   '/news/(\d+)',              'news',
+
+    '/course/?',                'course',
+    '/course/(.+)',             'course',
+
+#   '/article/?',               'article',
+#   '/article/(\d*)',           'article',
+
+    '/algorithm/?',             'algorithm',
+    '/algorithm/(\d+)',         'algorithm',
+    '/algorithm/status/?',      'status',
+    '/algorithm/status/(\d+)',  'status',
+    '/algorithm/shoot',         'shoot',
+
+    '/problem/?'   ,            'problem',
+    '/problem/(\d+)',           'problem',
+    '/problem/status/?',        'status',
+    '/problem/status/(\d+)',    'status',
+    '/problem/shoot',           'shoot',
+
+    '/contest/?',               'contest',
+    '/contest/(\d+)',           'contest',
+    '/contest/status/?',        'status',
+    '/contest/status/(\d+)',    'status',
+#   '/contest/board/(\d+)',     'board',    # http://icpc.sharif.ir/acmicpc12/scoreboard/
+    '/contest/shoot',           'shoot',
+
+#   '/accounts/?',              'accounts',
+#   '/accounts/register',       'register',
+#   '/accounts/logout',         'logout',
+#   '/accounts/login',          'login',
+
+#   '/five-oh-oh',              'err500',
+    '/four-oh-four',            'err404'
+
 )
-
-render = render_jinja(
-       'templates/kernel',            # Set template directory.
-        encoding = 'utf-8',    # Encoding.
-    )
-
-# Add/override some global functions.
-render._lookup.globals.update(
-	STATIC_URL='/static/'
-	)
-
-
-class index:
-    def GET(self):
-        return render.index()
 
 class home:
     def GET(self):
         return render.home()
 
+class course:
+    def GET(self, id = None):
+        section = web.url().split('/')[1]
+        return course_render.home(section)
+
+class algorithm:
+    def GET(self, id = None):
+        section = web.url().split('/')[1]
+        return algorithm_render.home(section)
+
+class problem:
+    def GET(self, id = None):
+        section = web.url().split('/')[1]
+        return problem_render.home(section)
+
+class contest:
+    def GET(self, id = None):
+        section = web.url().split('/')[1]
+        return contest_render.home(section)
+
+class status:
+    def GET(self, id = None):
+        section = web.url().split('/')[1]
+
+        if id is None:
+            where = 'true'
+
+        if section == "algorithm":
+            if id:
+                where = 'subid=%s' % (id)
+            query = db.select('shots', what='subid,uid,pid,cid,addr,lang,created', where=where)
+            return contest_render.status(query)
+
+        elif section == "problem":
+            if id:
+                where = 'pid=%s' % (id)
+            query = db.select('shots', what='subid,uid,pid,cid,addr,lang,created', where=where)
+            return contest_render.status(query)
+
+        elif section == "contest":
+            if id:
+                where = 'cid=%s' % (id)
+            query = db.select('shots', what='subid,uid,pid,cid,addr,lang,created', where=where)
+            return contest_render.status(query)
+
+        return render.err404()
+
 class shoot:
     def GET(self):
-        return render.shoot()
+        return algorithm_render.shoot()
 
     def POST(self):
+        section = web.url().split('/')[1]
+
         i = web.input(code={})
 
         uid = int(i.uid) 
@@ -67,17 +142,11 @@ class shoot:
             )
         jucs.submit(subid, uid, pid, lang, addr)
 
-        raise web.seeother('/status/%s' % (subid))
+        raise web.seeother('/algorithm/status/%s' % (subid))
 
-class status:
-    def GET(self, subid):
-        if subid:
-            where = 'subid=%s' % (subid)
-        else:
-            where = 'true'
-
-        query = db.select('shots', what='subid,uid,pid,cid,addr,lang,created', where=where)
-        return render.status(query)
+class err404:
+    def GET(self):
+        return render.err404()
 
 if __name__ == "__main__":
     app = web.application(urls, globals())
