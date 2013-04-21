@@ -91,19 +91,19 @@ class status:
         if section == "algorithm":
             if id:
                 where = 'subid=%s' % (id)
-            query = db.select('shots', what='subid,uid,pid,cid,addr,lang,created', where=where)
+            query = db.select('shots', what='subid,uid,pid,cid,addr,lang,created,stat,time,mmem', where=where)
             return algorithm_render.status(query)
 
         elif section == "problem":
             if id:
                 where = 'pid=%s' % (id)
-            query = db.select('shots', what='subid,uid,pid,cid,addr,lang,created', where=where)
+            query = db.select('shots', what='subid,uid,pid,cid,addr,lang,created,stat,time,mmem', where=where)
             return problem_render.status(query)
 
         elif section == "contest":
             if id:
                 where = 'cid=%s' % (id)
-            query = db.select('shots', what='subid,uid,pid,cid,addr,lang,created', where=where)
+            query = db.select('shots', what='subid,uid,pid,cid,addr,lang,created,stat,time,mmem', where=where)
             return contest_render.status(query)
 
         return render.err404()

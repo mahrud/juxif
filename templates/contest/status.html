@@ -8,23 +8,23 @@ $var title: Status
     <tr class="zero">
         <th class="leftmost">#</th>
         <th>user</th>
-        <th>problem</th>
+        <th>prob</th>
         <th>lang</th>
         <th>date</th> 
-        <th>status</th>
+        <th>stat</th>
         <th>time</th>
-        <th>mem</th>
+        <th>mmem</th>
     </tr>
 $for x in data:
-    <tr class="odd">
+    <tr class="$loop.parity">
         <td><a href="/algorithm/status/$x.subid">$x.subid</a></td>
         <td><a href="/accounts/status/$x.uid">$x.uid</a></td>
         <td><a href="/problem/status/$x.pid">$x.pid</a></td>
         <td>$x.lang</td>
         <td>$x.created</td>
-        <td><a href="/algorithm/status/$x.subid" class="unreal">stat</a></td>
-        <td>time</td>
-        <td>mem</td>
+        <td><a href="/algorithm/status/$x.subid">$x.stat</a></td>
+        <td>$x.time</td>
+        <td>$x.mmem</td>
     </tr>
 </tbody>
 </table>
