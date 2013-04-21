@@ -2,19 +2,19 @@ import os
 import web
 import jucs
 import secret
+import shutil
 
-db = web.database(dbn='mysql', user='root', pw=secret.pw, db='juxif')
+db = web.database(dbn = 'mysql', user = 'root', pw = secret.pw, db = 'juxif')
 
-render = web.template.render('templates/', base='layout')
-
-course_render = web.template.render('templates/course/', base='../layout')
-#article_render = web.template.render('templates/article/', base='../layout')
-
-algorithm_render = web.template.render('templates/algorithm/', base='../layout')
-problem_render = web.template.render('templates/problem/', base='../layout')
-contest_render = web.template.render('templates/contest/', base='../layout')
-
-#accounts_render = web.template.render('templates/accounts/', base='../layout')
+renderer = {
+    'kernel':   web.template.render('templates/',           base = 'layout'),
+    'course':   web.template.render('templates/course/',    base = '../layout'),
+   #'article':  web.template.render('templates/article/',   base = '../layout'),
+    'accounts': web.template.render('templates/accounts/',  base = '../layout'),
+    'problem':  web.template.render('templates/problem/',   base = '../layout'),
+    'contest':  web.template.render('templates/contest/',   base = '../layout'),
+    'algorithm': web.template.render('templates/algorithm/', base = '../layout')
+    }
 
 urls = (
     '/?',                       'home',
@@ -44,7 +44,8 @@ urls = (
     '/contest/(\d+)',           'contest',
     '/contest/status/?',        'status',
     '/contest/status/(\d+)',    'status',
-#   '/contest/board/(\d+)',     'board',    # http://icpc.sharif.ir/acmicpc12/scoreboard/
+#   '/contest/board/(\d+)',     'board',
+#   http://icpc.sharif.ir/acmicpc12/scoreboard/
     '/contest/shoot',           'shoot',
 
 #   '/accounts/?',              'accounts',
@@ -54,88 +55,101 @@ urls = (
 
 #   '/five-oh-oh',              'err500',
     '/four-oh-four',            'err404'
-
-)
+    )
 
 class home:
+    """
+    Description for home? Seriously?
+    """
     def GET(self):
-        return render.home()
+        return renderer['kernel'].home()
 
 class course:
+    """
+    A Data Structure and Algorithm Design course similar to:
+    http://cerberus.delos.com:790/usacogate
+    """
     def GET(self, id = None):
         section = web.url().split('/')[1]
-        return course_render.home(section)
+        return renderer[section].home(section)
 
 class algorithm:
+    """
+    A Data Structure and Algorithm database/wiki similar to:
+    http://www.cs.sunysb.edu/~algorith/
+    Plus an efficient implementation competition.
+    """
     def GET(self, id = None):
         section = web.url().split('/')[1]
-        return algorithm_render.home(section)
+        return renderer[section].home(section)
 
 class problem:
+    """
+    Collection of theory/programming problems with references to 
+    related algorithms and courses.
+    """
     def GET(self, id = None):
         section = web.url().split('/')[1]
-        return problem_render.home(section)
+        return renderer[section].home(section)
 
 class contest:
+    """
+    A Programming Competition website similar to many!
+    """
     def GET(self, id = None):
         section = web.url().split('/')[1]
-        return contest_render.home(section)
+        return renderer[section].home(section)
 
 class status:
+    """
+    Shows the status of one or more shots (submissions)
+    """
     def GET(self, id = None):
         section = web.url().split('/')[1]
+        i = web.input(page = 1)
 
-        what = 'subid, uid, pid, cid, addr, lang, created, stat, time, mmem'
-        if id is None:
-            where = 'true'
+        order = {'algorithm': 'subid DESC',
+                 'problem': 'pid', 
+                 'contest': 'cid DESC'
+                 }  # FIXME
+        group = {'algorithm': 'subid',
+                 'problem': 'pid', 
+                 'contest': 'cid'
+                 }  # FIXME
 
-        if section == "algorithm":
-            if id:
-                where = 'subid=%s' % (id)
-            query = db.select('shots', what = what, where = where, order = "subid DESC")
-            return algorithm_render.status(query)
-        elif section == "problem":
-            if id:
-                where = 'pid=%s' % (id)
-            query = db.select('shots', what = what, where = where, order = "subid DESC")
-            return problem_render.status(query)
+        what = 'subid, uid, pid, addr, lang, created, stat, time, mmem'
+        where = str((id == None) or ('%s = %s' % (group[section], str(id))))
 
-        elif section == "contest":
-            if id:
-                where = 'cid=%s' % (id)
-            query = db.select('shots', what = what, where = where, order = "subid DESC")
-            return contest_render.status(query)
+        page = int(i.page)
+        limit = 19  # Perfect size for my beloved X61 Thinkpad screen!
+        offset = (page - 1) * limit
 
-        return render.err404()
+        query = db.select('shots', None, 
+            what, where, 
+            order[section], None, #group[section], FIXME
+            limit, offset)
+
+        return renderer[section].status(query)
 
 class shoot:
+    """
+    A place to shoot (submit) codes to the judge
+    """
     def GET(self):
         section = web.url().split('/')[1]
-
-        if section == "algorithm":
-            return algorithm_render.shoot()
-        elif section == "problem":
-            return problem_render.shoot()
-        elif section == "contest":
-            return contest_render.shoot()
-
-
-        return render.err404()
+        return renderer[section].shoot()
 
     def POST(self):
         section = web.url().split('/')[1]
-
         i = web.input(code={})
 
-        uid = int(i.uid) 
-        pid = int(i.pid) 
+        uid = int(i.uid)
+        pid = int(i.pid)
         cid = int(i.cid)
-
-        addr = '%s/source/%s' % (os.getcwd(), i.code.filename)
-        code = file(addr, 'w')
+        orig = '%s/sources/%s' % (os.getcwd(), i.code.filename)
+        code = file(orig, 'w')
         code.write(i.code.value)
         code.close()
-    
         lang = i.lang
 
         subid = db.insert('shots', 
@@ -143,20 +157,31 @@ class shoot:
             uid = uid, 
             pid = pid, 
             cid = cid, 
-            addr = addr, 
+            addr = orig, 
             lang = lang,
             mode = 0 # mode[i.cid]  #FIXME
             # created is set to CURRENT_TIMESTAMP,
-            # access is updated by judge
-            # modify is updated by judge)
+            # TODO: update `access` by judge
+            # TODO: update `modify` by judge
             )
-        jucs.submit(subid, uid, pid, lang, addr)
 
+        addr = '%s/sources/%d-%s' % (os.getcwd(), subid, i.code.filename)
+        shutil.move(orig, addr)
+
+        db.update('shots', 
+            where = "subid=%d" % subid, 
+            addr = addr
+            )
+
+        jucs.submit(subid, uid, pid, lang, addr)
         raise web.seeother('/algorithm/status/%s' % (subid))
 
 class err404:
+    """
+    Sorry, description not found!!
+    """
     def GET(self):
-        return render.err404()
+        return renderer['kernel'].err404()
 
 if __name__ == "__main__":
     app = web.application(urls, globals())
