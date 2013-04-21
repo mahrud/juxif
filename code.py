@@ -85,25 +85,25 @@ class status:
     def GET(self, id = None):
         section = web.url().split('/')[1]
 
+        what = 'subid, uid, pid, cid, addr, lang, created, stat, time, mmem'
         if id is None:
             where = 'true'
 
         if section == "algorithm":
             if id:
                 where = 'subid=%s' % (id)
-            query = db.select('shots', what='subid,uid,pid,cid,addr,lang,created,stat,time,mmem', where=where)
+            query = db.select('shots', what = what, where = where, order = "subid DESC")
             return algorithm_render.status(query)
-
         elif section == "problem":
             if id:
                 where = 'pid=%s' % (id)
-            query = db.select('shots', what='subid,uid,pid,cid,addr,lang,created,stat,time,mmem', where=where)
+            query = db.select('shots', what = what, where = where, order = "subid DESC")
             return problem_render.status(query)
 
         elif section == "contest":
             if id:
                 where = 'cid=%s' % (id)
-            query = db.select('shots', what='subid,uid,pid,cid,addr,lang,created,stat,time,mmem', where=where)
+            query = db.select('shots', what = what, where = where, order = "subid DESC")
             return contest_render.status(query)
 
         return render.err404()
