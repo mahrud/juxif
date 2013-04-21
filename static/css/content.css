@@ -27,6 +27,14 @@ td {
     padding: 5px;
 }
 
+td.yes {
+    background-color: lightgreen;
+}
+
+td.no {
+    background-color: #FF9999;
+}
+
 th {
     border-width: 1px;
     border-left-width: 0px;

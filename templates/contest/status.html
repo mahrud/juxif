@@ -15,16 +15,25 @@ $var title: Status
         <th>time</th>
         <th>mmem</th>
     </tr>
-$for x in data:
+$for i in data:
     <tr class="$loop.parity">
-        <td><a href="/algorithm/status/$x.subid">$x.subid</a></td>
-        <td><a href="/accounts/status/$x.uid">$x.uid</a></td>
-        <td><a href="/problem/status/$x.pid">$x.pid</a></td>
-        <td>$x.lang</td>
-        <td>$x.created</td>
-        <td><a href="/algorithm/status/$x.subid">$x.stat</a></td>
-        <td>$x.time</td>
-        <td>$x.mmem</td>
+        <td><a href="/algorithm/status/$i.subid">$i.subid</a></td>
+        <td><a href="/accounts/status/$i.uid">$i.uid</a></td>
+        <td><a href="/problem/status/$i.pid">$i.pid</a></td>
+        <td>$i.lang</td>
+        <td>$i.created</td>
+        $# FIXME: we should setup a protocol for stat codes
+        $code:
+            if i.stat == 0:
+                x = 'yes'
+            elif i.stat == 1 or i.stat == 2:
+                x = 'no'
+            else:
+                x = 'none'
+        <td class=$x ><a href="/algorithm/status/$i.subid">$i.stat</a></td>
+        $# TODO: maybe we should color time/mmem exceeds?
+        <td>$i.time</td>
+        <td>$i.mmem</td>
     </tr>
 </tbody>
 </table>
