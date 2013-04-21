@@ -19,7 +19,7 @@ renderer = {
 urls = (
     '/?',                       'home',
 #   '/admin',                   'admin',
-#   '/news/?',                  'news',
+   '/news/?',                  'news',
 #   '/news/(\d+)',              'news',
 
     '/course/?',                'course',
@@ -63,6 +63,13 @@ class home:
     """
     def GET(self):
         return renderer['kernel'].home()
+
+class news:
+    """
+    For now, shows the RSS feed of out git repo.
+    """
+    def GET(self):
+        return renderer['kernel'].news()
 
 class course:
     """

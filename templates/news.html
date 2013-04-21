@@ -1,0 +1,48 @@
+$var title: News Feed
+
+<div class="content" id="default">
+    <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+
+    <!-- Dynamic Feed Control and Stylesheet -->
+    <script src="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
+    <style type="text/css">
+      @import url("http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.css");
+    </style>
+
+    <script type="text/javascript">
+    /*
+    *  How to use the Dynamic Feed Control, which has pretty UI already made for you!
+    *  Don't forget to check out the options:
+    *  http://www.google.com/uds/solutions/dynamicfeed/reference.html
+    */
+
+    google.load('feeds', '1');
+
+    function OnLoad() {
+      var feeds = [
+        {
+          title: 'Juxif Commits',
+          url: 'https://github.com/mahrud/juxif/commits/algo-clone.atom'
+        },
+        {
+          title: 'Jux Commits',
+          url: 'https://github.com/jux-foundation/jux/commits/dev.atom'
+        }
+      ];
+
+      var options = {
+        stacked : true,
+        horizontal : false,
+        title : "Recent Commits to the Project"
+      };
+
+      new GFdynamicFeedControl(feeds, 'feed', options);
+      document.getElementById('feed').style.width = "700px";
+    }
+
+    google.setOnLoadCallback(OnLoad);
+    </script>
+    <center>
+    <div style="background-color: white; font-family: Arial, sans-serif;border: 0 none;" id="feed" style="width: 500px;">Loading ...</div>
+    </center>
+</div
