@@ -1,7 +1,8 @@
 $def with (content)
-$var title: 404 Not Found
+$var title: حساب کاربری
 
-<article id="err404">
+<article id="accounts">
+    $# if not logged in, redirect to login, else, to accounts page
     <h1>Error 404: Page Not Found</h1>
     <p>Hi! Sorry, this page isn't home right now, please leave your message after the beep!<br />
     Beeeeeeeeeeeeeep!</p>

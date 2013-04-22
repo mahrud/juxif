@@ -31,10 +31,6 @@ article#home {
 article#shoot {
     position: absolute;
     top: 100px;
-    left: 0px;
-    right: 0px;
-    width: auto;
-    height: auto;
 }
 
 article#status {
@@ -44,30 +40,13 @@ article#status {
 
     position: absolute;
     top: 100px;
-    left: 0px;
-    right: 0px;
     width: auto;
     height: auto;
 }
 
-article#login {
+article#login, article#register {
     position:absolute;
-    width:800px;
-    height:400px;
-    left:50%;
-    top:50%;
-    margin-left:-400px;
-    margin-top:-200px;
-}
-
-article#register {
-    position:absolute;
-    width:800px;
-    height:420px;
-    left:50%;
-    top:50%;
-    margin-left:-400px;
-    margin-top:-200px;
+    top: 100px;
 }
 
 header {

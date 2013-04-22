@@ -3,11 +3,10 @@
     font-weight: normal;
 
 	width: 400px;
-    height: 120px;
     padding-top: 5px;
     padding-left: 5px;
     padding-right: 5px;
-    padding-bottom: 5px;
+    padding-bottom: 30px;
 
     direction: rtl;
 	text-align: right;
@@ -18,7 +17,11 @@
 	background: rgba(250,250,250,0.5);
 }
 
-.form input[type="text"] {
+.form input.gray {
+    color: gray;
+}
+
+.form input[type="text"], .form input[type="email"], .form input[type="password"] {
     float: left;
 	width: 200px;
 
@@ -28,6 +31,10 @@
     clear: both;
 }
 
+.form input[type="email"], .form input[type="password"] {
+    direction: ltr;
+}
+
 .form input[type="file"] {
     direction: ltr;
     float: left;
@@ -35,7 +42,6 @@
 }
 
 .form label {
-    text-align: left;
 }
 
 .form input[type="button"], .form input[type="submit"] {
@@ -67,14 +73,4 @@
 
 .form input[type="button"]:active {
 	color: hsla(42, 100%, 60%, 1);
-}
-
-.form input[type="password"] {
-    float: left;
-
-	width: 200px;
-
-	border: line;
-	border-radius: 3px;
-	border-color: rgba(0,0,0,0.2);
 }

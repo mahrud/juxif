@@ -38,3 +38,8 @@ var __key_handler = function(key_event) {
         __search_request();
     }
 };
+
+function clicked(element) {
+    element.value='';
+    element.style.color='black';
+};

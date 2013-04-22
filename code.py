@@ -4,27 +4,33 @@ import jucs
 import secret
 import shutil
 
+import accounts
+#import course
+#import problem
+#import contest
+#import algorithm
+
 db = web.database(dbn = 'mysql', user = 'root', pw = secret.pw, db = 'juxif')
 
 renderer = {
     'kernel':   web.template.render('templates/',           base = 'layout'),
     'course':   web.template.render('templates/course/',    base = '../layout'),
    #'article':  web.template.render('templates/article/',   base = '../layout'),
-    'accounts': web.template.render('templates/accounts/',  base = '../layout'),
     'problem':  web.template.render('templates/problem/',   base = '../layout'),
     'contest':  web.template.render('templates/contest/',   base = '../layout'),
+#    'accounts': web.template.render('templates/accounts/',  base = '../layout'),
     'algorithm': web.template.render('templates/algorithm/', base = '../layout')
     }
 
 urls = (
     '/?',                       'home',
-#   '/admin',                   'admin',
-   '/news/?',                  'news',
-#   '/news/(\d+)',              'news',
+#   '/admin',                   accounts.accounts_app,,
+    '/accounts',                accounts.accounts_app,
 
+    '/news/?',                  'news',
+#   '/news/(\d+)',              'news',
     '/course/?',                'course',
     '/course/(.+)',             'course',
-
 #   '/article/?',               'article',
 #   '/article/(\d*)',           'article',
 
@@ -44,14 +50,9 @@ urls = (
     '/contest/(\d+)',           'contest',
     '/contest/status/?',        'status',
     '/contest/status/(\d+)',    'status',
+    '/contest/shoot',           'shoot',
 #   '/contest/board/(\d+)',     'board',
 #   http://icpc.sharif.ir/acmicpc12/scoreboard/
-    '/contest/shoot',           'shoot',
-
-#   '/accounts/?',              'accounts',
-#   '/accounts/register',       'register',
-#   '/accounts/logout',         'logout',
-#   '/accounts/login',          'login',
 
 #   '/five-oh-oh',              'err500',
     '/four-oh-four',            'err404'

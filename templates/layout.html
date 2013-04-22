@@ -15,7 +15,6 @@ $def with (content)
         </script>
     <script src="/static/js/navigation.js" type="text/javascript"></script>
     <script src="/static/js/home.js" type="text/javascript"></script>
-<!--<script type="text/javascript"> navigate("page") </script>--!>
 </head>
 
 <body>
@@ -25,7 +24,7 @@ $def with (content)
                 onmouseover="showTooltip('right_tooltip','خبر ها');"
                 onmouseout="hideTooltip('right_tooltip')"
                 onclick="navigate('news')" >
-            <img src="/static/img/whitesmall/contest.png" class="navbar_button" id="navbar_event"
+            <img src="/static/img/whitesmall/contest.png" class="navbar_button" id="navbar_contest"
                 onmouseover="showTooltip('right_tooltip','لیگ و مسابقات');"
                 onmouseout="hideTooltip('right_tooltip')"
                 onclick="navigate('contest')" >
@@ -41,10 +40,10 @@ $def with (content)
                 onmouseover="showTooltip('right_tooltip','مساله ها');"
                 onmouseout="hideTooltip('right_tooltip')"
                 onclick="navigate('problem')" >
-            <img src="/static/img/whitesmall/profile.png" class="navbar_button" id="navbar_profile"
-                onmouseover="showTooltip('right_tooltip','پروفایل');"
+            <img src="/static/img/whitesmall/accounts.png" class="navbar_button" id="navbar_accounts"
+                onmouseover="showTooltip('right_tooltip','حساب کاربری');"
                 onmouseout="hideTooltip('right_tooltip')"
-                onclick="navigate('profile')" >
+                onclick="navigate('accounts')" >
             <img src="/static/img/whitesmall/home.png" class="navbar_button" id="navbar_home"
                 onmouseover="showTooltip('right_tooltip','خانه');"
                 onmouseout="hideTooltip('right_tooltip')"
@@ -81,6 +80,8 @@ $def with (content)
 
         <p class="tooltip" id="right_tooltip"></p>
         <p class="tooltip" id="left_tooltip"></p>
+
+        <script type="text/javascript"> navbar(); </script>
     </section>
 
     <section id="container">
