@@ -18,8 +18,9 @@ article {
     text-align: center;
 }
 
-article#err {
+article#err404 {
     font-family: sans-serif;
+    font-weight: normal;
 }
 
 article#home {
