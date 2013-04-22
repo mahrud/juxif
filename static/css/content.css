@@ -4,97 +4,52 @@
 @import "algorithm.css";
 @import "problem.css";
 @import "contest.css";
+@import "accounts.css";
 
-table {
+article {
+	position: relative;
+    top: 30px;
+    left: 0px;
+    right: 0px;
+
+    width:auto;
+    height:auto;
+
     text-align: center;
-    width: 65%;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-
-    border-width: 1px;
-    border-right-width: 0px;
-    border-top-width: 0px;
-    border-style: solid;
-    font-size: small;
 }
 
-td {
-    border-width: 1px;
-    border-left-width: 0px;
-    border-bottom-width: 0px;
-    border-color: gray;
-    border-style: solid;
-    padding: 5px;
-}
-
-td.yes {
-    background-color: lightgreen;
-}
-
-td.no {
-    background-color: #FF9999;
-}
-
-th {
-    border-width: 1px;
-    border-left-width: 0px;
-    border-bottom-width: 0px;
-    border-color: gray;
-    border-style: solid;
-    padding: 5px;
-    color: rgba(255, 255, 255, 0.8);
-    background-color: rgba(0, 0, 0, 0.8);
-}
-
-.content {
+article#err {
     font-family: sans-serif;
+}
+
+article#home {
+    position: relative;
+    top: 20;
+}
+
+article#shoot {
+    position: absolute;
+    top: 100px;
+    left: 0px;
+    right: 0px;
+    width: auto;
+    height: auto;
+}
+
+article#status {
+    font-family: sans-serif, persian-modern;
     font-weight: normal;
+	font-size: 12px;
 
-    text-align: center;
+    position: absolute;
+    top: 100px;
+    left: 0px;
+    right: 0px;
+    width: auto;
+    height: auto;
 }
 
-.content a {
-    text-decoration:none;
-}
-
-.content#shoot {
-    position:absolute;
-    width:auto;
-    height:auto;
-    left:0px;
-    right:0px;
-    top:100px;
-}
-
-.content#status {
-    position:absolute;
-    width:auto;
-    height:auto;
-    left:0px;
-    right:0px;
-    top:100px;
-}
-
-.content#default {
-    position:absolute;
-    width:auto;
-    height:auto;
-    left:0px;
-    right:0px;
-    top:100px;
-}
-
-.content#home {
-    position:absolute;
-    left:0px;
-    right:0px;
-    width:auto;
-    top:32px;
-    bottom:0px;
-    height:auto;
-}
-
-.content#login {
+article#login {
     position:absolute;
     width:800px;
     height:400px;
@@ -103,7 +58,8 @@ th {
     margin-left:-400px;
     margin-top:-200px;
 }
-.content#register {
+
+article#register {
     position:absolute;
     width:800px;
     height:420px;
@@ -113,7 +69,7 @@ th {
     margin-top:-200px;
 }
 
-.content header {
+header {
     font-family: persian-modern, Tahoma;
     font-weight:bold;
     font-size:24px;
@@ -121,7 +77,6 @@ th {
     position: relative;
 }
 
-#alert {
-    color:red;
-    text-align:center;
+.content a {
+    text-decoration:none;
 }

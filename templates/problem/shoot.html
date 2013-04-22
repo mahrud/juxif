@@ -1,14 +1,21 @@
 $var title: Shoot
 
-<div class="content" id="shoot">
-<div id="inputArea">
-    <form method="POST" enctype="multipart/form-data" action="" class="form"><br />
-        <input type="text" name="uid" value=0 /> <br />
-        <input type="text" name="pid" value=0 /> <br />
-        <input type="text" name="cid" value=0 /> <br />
+<article id="shoot">
+    <center>
+    <form method="POST" enctype="multipart/form-data" action="" class="form">
+        <input type="hidden" name="uid" value=-1 />
+        <input type="hidden" name="cid" value=-1 />
+
+        <label for="pid">نام سؤال:</label>
+        <input type="text" name="pid" value=1 /> <br />
+
+        <label for="code">سورس:</label>
         <input type="file" name="code" /> <br />
+
+        <label for="lang">سورس:</label>
         <input type="text" name="lang" value='cpp' /> <br />
+
         <input type="submit" value="shoot" />
     </form>
-</div>
-</div>
+    </center>
+</article>

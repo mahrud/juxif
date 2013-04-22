@@ -45,11 +45,12 @@ function navigate(dest)
 {
 //  page = dest;
 
-// Using jQuery's ajax method since it automatically sets the HTTP_X_REQUESTED_WITH header so that
-// we can determine ajax requests in views via the request.is_ajax method
+//  Using jQuery's ajax method since it automatically sets the HTTP_X_REQUESTED_WITH header so that
+//  we can determine ajax requests in views via the request.is_ajax method
+  
 //  $.get(nav_map(dest), 
 //      function(data) {
-//          document.getElementById("main_section").innerHTML = data;
+//          document.getElementById("html").innerHTML = data;
 //          document.write(data);
 //      }
 //  );
@@ -87,6 +88,9 @@ function nav_map(dest)
         return "accounts/logout";
     if (dest == "login")
         return "accounts/login";
+
+    if (dest == "404")
+        return  "four-oh-four";
 
     return  "four-oh-four";
 };

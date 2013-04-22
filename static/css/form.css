@@ -1,120 +1,79 @@
 .form {
-	vertical-align:middle;
-	background: rgba(250,250,250,0.5);
-	border:dashed;
-	border-color: rgba(0, 0, 0, 0.2);
-	border-radius:10px;
-	position:relative;
-	left:25%;
-	right:25%;
-	width:50%;
+    position: relative;
+    font-weight: normal;
+
+	width: 400px;
+    height: 120px;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+
+    direction: rtl;
 	text-align: right;
-}
 
-.form b {
-	font-weight:normal;
-	position:relative;
-	right: 16px;
-	height:400px;
-}
-
-.form input[type="button"], #inputArea input[type="submit"] {
-	transition: background 0.5s ease-in-out,
-                color 0.5s ease-in;
-	-webkit-transition: background 0.5s ease-in-out,
-                        color 0.5s ease-in;
-	
-	background: rgba(0,0,0,0.7);
-
-	font-family: sans-serif;
-	font-weight: normal;
-	font-size: 14px;
-	color: white;
-
-	width: 50px;
-	height: 25px;
-    border: dotted;
-    border-width: 1px;
-	border-radius: 5px;
-
-    float: right;
-}
-
-.form input[type="button"]:hover, #inputArea input[type="submit"]:hover {
-	background:rgba(0,0,0,0.9);
-}
-
-.form input[type="button"]:active, #inputArea input[type="submit"]:active {
-	-webkit-transition: color 0s ease-in;
-	transition: color 0s ease-in;
-	
-	color:hsla(42, 100%, 60%, 1);
+	border: dashed;
+	border-radius: 10px;
+	border-color: rgba(0, 0, 0, 0.5);
+	background: rgba(250,250,250,0.5);
 }
 
 .form input[type="text"] {
-	position:absolute;
-	left:16px;
-	width:200px;
-	border:line;
-	border-color:rgba(0,0,0,0.2);
-	border-radius:3px;
+    float: left;
+	width: 200px;
+
+	border-radius: 3px;
+	border-color: rgba(0,0,0,0.2);
+
     clear: both;
 }
 
 .form input[type="file"] {
-	position:absolute;
-	left:16px;
-	width:200px;
+    float: left;
+	width: 200px;
+}
+
+.form label {
+    text-align: left;
+}
+
+.form input[type="button"], .form input[type="submit"] {
+    float: left;
+	width: 50px;
+	height: 25px;
     clear: both;
+
+	font-family: sans-serif;
+	font-weight: normal;
+	font-size: 14px;
+
+	color: white;
+    border: dotted;
+    border-width: 1px;
+	border-radius: 5px;
+
+	background: rgba(0,0,0,0.7);
+
+	transition: background 0.5s ease-in-out,
+                color 0.5s ease-in;
+	-webkit-transition: background 0.5s ease-in-out,
+                        color 0.5s ease-in;
 }
 
-input[type="password"] {
-	position:absolute;
-	left:16px;
-	width:200px;
-	border:line;
-	border-color:rgba(0,0,0,0.2);
-	border-radius:3px;
+.form input[type="button"]:hover {
+	background: rgba(0,0,0,0.9);
 }
 
-#inputArea {
-    font-weight:normal;
-	position:relative;
-    height:280px;
-	right: 4%;
+.form input[type="button"]:active {
+	color: hsla(42, 100%, 60%, 1);
 }
 
-#inputArea input[type="text"], #inputArea input[type="password"], #inputArea input[type="file"] {
-    position:relative;
-	right:46%;
-	width:46%;
-    padding-bottom:4px;
-	border:line;
-	border-color:rgba(0,0,0,0.2);
-	border-radius:3px;
-    display: block;
-}
+.form input[type="password"] {
+    float: left;
 
-#inputArea input[id="id_math_captcha_field"] {
-    right:0%;
-}
+	width: 200px;
 
-#inputArea label[for="id_math_captcha_field"] {
-    direction:ltr;
-    text-align:left;
-    margin-left:8%;
-    padding-top:4px;
-}
-
-#inputArea label[for="id_username"] {
-    margin-top:8px;
-}
-
-#inputArea input[type="submit"], #inputArea label {
-    display:block;
-}
-
-#inputArea input[type="submit"] {
-    margin-top:8px;
-    aright:0%;
+	border: line;
+	border-radius: 3px;
+	border-color: rgba(0,0,0,0.2);
 }

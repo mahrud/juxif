@@ -1,43 +1,42 @@
 $var title: Home
 
-    <!--<header>به algorithms.ir خوش آمدید!</header>-->
-    <input type="hidden" id="page" value="home">
-    <article class="content" id="home">
+    <article id="home">
         <center>
         <section class="bigblock">
-        <div class="column" id="left">
-            <div class="block">
-                <img src="/static/img/bigblack/problem.png" class="button" id="problem"
-                    onmouseover="showTooltip('home_tooltip','مساله ها')"
-                    onmouseout="hideTooltip('home_tooltip')"
-                    onclick="navigate('problem')">
+            <div class="column" id="left">
+                <div class="block" id="top">
+                    <img src="/static/img/bigblack/problem.png" class="button" id="problem"
+                        onmouseover="showTooltip('home_tooltip','مساله ها')"
+                        onmouseout="hideTooltip('home_tooltip')"
+                        onclick="navigate('problem')">
+                </div>
+
+                <div class="block" id="bottom">
+                    <img src="/static/img/bigblack/contest.png" class="button" id="contest"
+                        onmouseover="showTooltip('home_tooltip','مسابقات و لیگ')"
+                        onmouseout="hideTooltip('home_tooltip')"
+                        onclick="navigate('contest');">
+                </div>
             </div>
-            <br />
-            <div class="block">
-                <img src="/static/img/bigblack/contest.png" class="button" id="contest"
-                    onmouseover="showTooltip('home_tooltip','مسابقات و لیگ')"
-                    onmouseout="hideTooltip('home_tooltip')"
-                    onclick="navigate('contest');">
+
+            <div class="column" id="right">
+                <div class="block" id="top">
+                    <img src="/static/img/bigblack/algorithm.png" class="button" id="algorithm" 
+                        onmouseover="showTooltip('home_tooltip','الگوریتم ها')"
+                        onmouseout="hideTooltip('home_tooltip')"
+                        onclick="navigate('algorithm');">
+                </div>
+
+                <div class="block" id="bottom">
+                    <img src="/static/img/bigblack/course.png" class="button" id="course"
+                        onmouseover="showTooltip('home_tooltip','درسنامه ها')"
+                        onmouseout="hideTooltip('home_tooltip')"
+                        onclick="navigate('course');">
+                </div>
             </div>
-        </div>
-        <div class="column" id="right">
-            <div class="block">
-                <img src="/static/img/bigblack/algorithm.png" class="button" id="algorithm" 
-                    onmouseover="showTooltip('home_tooltip','الگوریتم ها')"
-                    onmouseout="hideTooltip('home_tooltip')"
-                    onclick="navigate('algorithm');">
+            <div class="tooltip">
+                <p class="tooltip" id="home_tooltip"></p>
             </div>
-            <br />
-            <div class="block">
-                <img src="/static/img/bigblack/course.png" class="button" id="course"
-                    onmouseover="showTooltip('home_tooltip','درسنامه ها')"
-                    onmouseout="hideTooltip('home_tooltip')"
-                    onclick="navigate('course');">
-            </div>
-        </div>
-        <div class="tooltip">
-            <p class="tooltip" id="home_tooltip"></p>
-        </div>
         </section>
         </center>
     </article>
