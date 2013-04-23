@@ -3,7 +3,7 @@
 
 @font-face {  
     font-family: persian-modern;
-    src: url( /static/fonts/persian-modern-regular.ttf ) format("truetype");
+    src: url( /static/font/persian-modern-regular.ttf ) format("truetype");
 }
 
 body {

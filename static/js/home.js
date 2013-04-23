@@ -41,5 +41,6 @@ var __key_handler = function(key_event) {
 
 function clicked(element) {
     element.value='';
+    element.onclick='';
     element.style.color='black';
 };

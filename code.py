@@ -18,13 +18,15 @@ renderer = {
    #'article':  web.template.render('templates/article/',   base = '../layout'),
     'problem':  web.template.render('templates/problem/',   base = '../layout'),
     'contest':  web.template.render('templates/contest/',   base = '../layout'),
-#    'accounts': web.template.render('templates/accounts/',  base = '../layout'),
+    'accounts': web.template.render('templates/accounts/',  base = '../layout'),
     'algorithm': web.template.render('templates/algorithm/', base = '../layout')
     }
 
 urls = (
     '/?',                       'home',
-#   '/admin',                   accounts.accounts_app,,
+#   '/admin',                   accounts.accounts_app,
+
+    '/accounts/status/(\d+)',   'status',
     '/accounts',                accounts.accounts_app,
 
     '/news/?',                  'news',
@@ -118,11 +120,13 @@ class status:
 
         order = {'algorithm': 'subid DESC',
                  'problem': 'pid', 
-                 'contest': 'cid DESC'
+                 'contest': 'cid DESC',
+                 'accounts': 'uid'
                  }  # FIXME
         group = {'algorithm': 'subid',
                  'problem': 'pid', 
-                 'contest': 'cid'
+                 'contest': 'cid',
+                 'accounts': 'uid'
                  }  # FIXME
 
         what = 'subid, uid, pid, addr, lang, created, stat, time, mmem'

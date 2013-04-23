@@ -79,6 +79,7 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `gid` int(11) NOT NULL,
+  `email` varchar(128) NOT NULL,
   `username` varchar(32) NOT NULL,
   `realname` varchar(32) NOT NULL,
   `password` varchar(128) NOT NULL,

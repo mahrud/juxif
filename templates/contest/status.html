@@ -12,8 +12,8 @@ $var title: Status
     $for i in data:
         <tr class="$loop.parity">
             <td><a href="/algorithm/status/$i.subid">$i.subid</a></td>
-            <td><a href="/accounts/status/$i.uid">$i.uid</a></td>
-            <td><a href="/problem/status/$i.pid">$i.pid</a></td>
+            <td><a href="/accounts/$i.uid">$i.uid</a></td>
+            <td><a href="/problem/$i.pid">$i.pid</a></td>
             <td>$i.lang</td>
             <td>$i.created</td>
             $# FIXME: we should setup a protocol for stat codes
