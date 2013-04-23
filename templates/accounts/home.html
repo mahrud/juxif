@@ -22,7 +22,10 @@ $var title: حساب کاربری
             <td>$i.username</td>
             <td>$i.created</td>
             $# FIXME: make the email spam proof
-            <td><a href="mailto:$i.email">$i.email</a></td>
+            $code:
+                addr  = i.email.split('@')[0] + '+NOSPAM@' + i.email.split('@')[1]
+                email = i.email.split('@')[0] + ' [at] ' + i.email.split('@')[1]
+            <td><a href="mailto:$addr">$email</a></td>
             $# FIXME: some process to count shoots, accepted and total
             <td><a href="/accounts/status/$i.uid">لیست</a></td>
             <td><a href="/accounts/status/$i.uid">لیست</a></td>

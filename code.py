@@ -1,8 +1,10 @@
 import os
 import web
 import jucs
-import secret
 import shutil
+
+import config
+import secret
 
 import accounts
 #import course
@@ -138,7 +140,7 @@ class status:
 
         query = db.select('shots', None, 
             what, where, 
-            order[section], None, #group[section], FIXME
+            'subid DESC', None, #order[section], group[section], FIXME
             limit, offset)
 
         return renderer[section].status(query)
