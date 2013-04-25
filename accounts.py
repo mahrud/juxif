@@ -7,6 +7,7 @@ from Crypto.Hash import HMAC, SHA256
 from Crypto.Cipher import AES
 
 db = web.database(dbn = 'mysql', user = 'root', pw = secret.pw, db = 'juxif')
+session = web.session.Session(accounts_app, web.session.DiskStore('sessions'))
 
 renderer = web.template.render('templates/accounts/',  base = '../layout')
 
@@ -104,10 +105,17 @@ class register:
             digest = mac.digest()
 
             """
-            What we send back to the user:
+            What we email to the user:
                 BASE64( nonce : digest)
             """
-            return renderer.confirm(nonce.encode('base64') + ':' + digest.encode('base64')) # FIXME: We are supposed to email this!
+            token = nonce.encode('base64') + ':' + digest.encode('base64')
+
+            # FIXME: create general email templates
+            subject = ''
+            content = '<a href="%s">%s</a>' % (confirm, confirm)
+            # FIXME: We are supposed to email this!
+
+            return renderer.confirm(token)
         else:
             """
             What we get from the user: the nonce, its digest, and password
@@ -142,7 +150,7 @@ class register:
                 return renderer.confirm(nonce, 1)
 
             """
-            Aaaaan finally we can decrypt the nonce to get our code, 
+            Aaaaand finally we can decrypt the nonce to get our code, 
             and then split that to get the original data:
             """
             ctr = Counter.new(128)
@@ -160,13 +168,36 @@ class register:
 
             raise web.seeother('/%d' % (uid))
 
-class logout:
-    def GET(self):
-        return renderer.logout()
-
 class login:
     def GET(self):
+        i = web.input()
+
+        if i.login is None:
+            renderer.login()
+
+        uname = i.uname
+        passwd = i.passwd
+
+        what = 'uid, uname, passwd'
+        where = 'uname = %s' % (uname)
+
+        query = db.select('users', None, 
+            what, where)
+
+        hash = SHA256.new()
+        hash.update(secret.salt)
+        hash.update(query.passwd)
+        passwd = hash.digest()
+
+        # TODO: implement HTTP Digest Authentication :-fsck yeah!
+
+        session.start()
         return renderer.login()
+
+class logout:
+    def GET(self):
+        session.kill()
+        return renderer.logout("Bye!")
 
 accounts_app = web.application(urls, globals())
 if __name__ == "__main__":
