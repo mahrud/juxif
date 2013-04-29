@@ -1,9 +1,12 @@
+$def with (expired = 0)
 $var title: ثبت نام
 
 <article id="register">
     <center>
     <form method="POST" enctype="multipart/form-data" action="" class="form">
         <center><b><label>فرم ثبت نام</label></b></center>
+        $if expired:
+            <p style="color: red"><b>The confirmation link is expired. Please register again:</b></p> $# FIXME: translate
 
         <label for="fname">نام کامل*:</label>
         <input type="text" name="fname" value="گل آقا" 

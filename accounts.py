@@ -1,4 +1,5 @@
 import web
+import time
 import secret
 
 from Crypto import Random
@@ -38,6 +39,48 @@ class accounts:
 
         return renderer.home(query)
 
+class login:
+    def GET(self):
+        i = web.input()
+
+        if i.login is None:
+            renderer.login()
+
+        email = i.email
+        uname = i.uname
+        passwd = i.passwd
+
+        what = 'uid, email, uname, passwd'
+        where = 'email = %s OR uname = %s' % (email, uname)
+
+        query = db.select('users', None, 
+            what, where)
+
+        hash = SHA256.new()
+        hash.update(secret.salt)
+        hash.update(query.email)
+        hash.update(passwd)
+        passwd = hash.digest()
+
+        # TODO: implement HTTP Digest Authentication :-fsck yeah! https://github.com/mahrud/webpy_http-digest-auth
+        if passwd == query.passwd:
+            session.start()
+            session.auth = True
+            session.time = time.time()
+
+            session.uid = query.uid
+            session.email = query.email
+            session.uname = query.uname
+
+            return web.seeother("/")
+        else:
+            return renderer.login(1)
+
+class logout:
+    def GET(self):
+        session.kill()
+        return renderer.logout("Bye!")
+
 class register:
     def GET(self):
         return renderer.register()
@@ -46,26 +89,28 @@ class register:
         i = web.input(
             fname = None, uname = None, 
             email = None, passwd = None, 
-            nonce = None
+            token = None
             )
 
         fname = i.fname
         uname = i.uname
         email = i.email
         passwd = i.passwd
-        nonce = i.nonce
+        token = i.token
+
+        time = time.time()
 
         """
         Summary of what is about to happen:
         User to us:
             fullname, username, email, and password
         We to the user:
-            AES(SHA256(salt | password), (hex(fullname) : hex(username) : hex(email) : hex(password)))
+            AES(SHA256(salt | password), (hex(fullname) : hex(username) : hex(email) : hex(password) : hex(nonce)))
         Now, if the user successfully returened:
-            nonce, password
-        We register him!
+            token, password
+        And the time of token was less than 24 hours ago, we register him!
         """
-        if nonce is None:
+        if token is None:
             """
             What we get from the user: fullname, username, email, and password
             Then:
@@ -82,33 +127,35 @@ class register:
                 cipher(K, P) -> AES(K, P)
             And based on those, we have:
                 key = SHA256(salt | password)
-                nonce = AES(key, code)
+                token = AES(key, code)
             """
             hash = SHA256.new()
             hash.update(secret.salt)
             hash.update(passwd)
             key = hash.digest()
 
+            nonce = str(time).encode('hex') # FIXME: should we make it more complex?
+
             ctr = Counter.new(128)
             cipher = AES.new(key, AES.MODE_CTR, counter = ctr)
-            nonce = cipher.encrypt(code)
+            token = cipher.encrypt(code + ':' + nonce)
 
             """
             Now we set up one more function:
                 mac(P) -> HMAC(P)
             Now:
-                digest = HMAC(salt | password | nonce)
+                digest = HMAC(salt | password | token)
             """
             mac = HMAC.new(secret.salt)
             mac.update(passwd)
-            mac.update(nonce)
+            mac.update(token)
             digest = mac.digest()
 
             """
             What we email to the user:
-                BASE64( nonce : digest)
+                BASE64( token : digest)
             """
-            token = nonce.encode('base64') + ':' + digest.encode('base64')
+            token = token.encode('base64') + ':' + digest.encode('base64')
 
             # FIXME: create general email templates
             subject = ''
@@ -118,13 +165,13 @@ class register:
             return renderer.confirm(token)
         else:
             """
-            What we get from the user: the nonce, its digest, and password
+            What we get from the user: the token, its digest, and password
             Then we set up some cryptographic functions:
                 hash(P) -> SHA256(P)
                 cipher(K, P) -> AES(K, P)
              Based on those, we have:
                 key = SHA256(salt | password)
-                nonce = AES(key, code)
+                token = AES(key, code)
             """
             hash = SHA256.new()
             hash.update(secret.salt)
@@ -135,28 +182,37 @@ class register:
             Now we set up one more function:
                 mac(P) -> HMAC(P)
             Now:
-                digest = HMAC(salt | password | nonce[0])
+                digest = HMAC(salt | password | token[0])
             """
             mac = HMAC.new(secret.salt)
             mac.update(passwd)
-            mac.update(nonce.split(':')[0].decode('base64'))
+            mac.update(token.split(':')[0].decode('base64'))
             digest = mac.digest()
 
             """
-            To ensure that the nonce is correct, 
+            To ensure that the token is correct, 
             we check it by comparing it to its digest 
             """
-            if nonce.split(':')[1].decode('base64') != digest:
-                return renderer.confirm(nonce, 1)
+            if token.split(':')[1].decode('base64') != digest:
+                return renderer.confirm(token, 1)
 
             """
-            Aaaaand finally we can decrypt the nonce to get our code, 
+            Aaaaand finally we can decrypt the token to get our code, 
             and then split that to get the original data:
             """
             ctr = Counter.new(128)
             cipher = AES.new(key, AES.MODE_CTR, counter = ctr)
-            code = cipher.decrypt(nonce.split(':')[0].decode('base64'))
-            fname, uname, email, passwd = code.split(':')
+            code = cipher.decrypt(token.split(':')[0].decode('base64'))
+            fname, uname, email, passwd, nonce = code.split(':')
+
+            """
+            To ensure that the token is current, we find difference 
+            between time and ttime, if it is more than 24 hours, we 
+            ignore the token and ask the user to register again.
+            """
+            ttime = float(nonce.decode('hex'))
+            if time - ttime > 24 * 60 * 60:
+                return renderer.register(1)
 
             uid = db.insert('users',
                 gid      = -1, # FIXME
@@ -167,37 +223,6 @@ class register:
                 )
 
             raise web.seeother('/%d' % (uid))
-
-class login:
-    def GET(self):
-        i = web.input()
-
-        if i.login is None:
-            renderer.login()
-
-        uname = i.uname
-        passwd = i.passwd
-
-        what = 'uid, uname, passwd'
-        where = 'uname = %s' % (uname)
-
-        query = db.select('users', None, 
-            what, where)
-
-        hash = SHA256.new()
-        hash.update(secret.salt)
-        hash.update(query.passwd)
-        passwd = hash.digest()
-
-        # TODO: implement HTTP Digest Authentication :-fsck yeah!
-
-        session.start()
-        return renderer.login()
-
-class logout:
-    def GET(self):
-        session.kill()
-        return renderer.logout("Bye!")
 
 accounts_app = web.application(urls, globals())
 if __name__ == "__main__":
