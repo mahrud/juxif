@@ -6,7 +6,7 @@ import shutil
 import config
 import secret
 
-import accounts
+from accounts import accounts_app, session
 #import course
 #import problem
 #import contest
@@ -26,10 +26,10 @@ renderer = {
 
 urls = (
     '/?',                       'home',
-#   '/admin',                   accounts.accounts_app,
+#   '/admin',                   accounts_app,
 
     '/accounts/status/(\d+)',   'status',
-    '/accounts',                accounts.accounts_app,
+    '/accounts',                accounts_app,
 
     '/news/?',                  'news',
 #   '/news/(\d+)',              'news',

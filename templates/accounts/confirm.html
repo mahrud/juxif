@@ -8,7 +8,7 @@ $var title: تائید ثبت نام
         $if err:
             <p style="color: red"><b>رمز عبور مطابقت ندارد!</b></p>
 
-        <input type="hidden" name="nonce" value="$content">
+        <input type="hidden" name="token" value="$content">
 
         <label for="passwd">رمز*:</label>
         <input type="password" name="passwd"><br/>

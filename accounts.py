@@ -7,17 +7,49 @@ from Crypto.Util import Counter
 from Crypto.Hash import HMAC, SHA256
 from Crypto.Cipher import AES
 
-db = web.database(dbn = 'mysql', user = 'root', pw = secret.pw, db = 'juxif')
-session = web.session.Session(accounts_app, web.session.DiskStore('sessions'))
-
-renderer = web.template.render('templates/accounts/',  base = '../layout')
-
 urls = (
     '/?',               'accounts',
     '/(\d+)',           'accounts',
     '/register',        'register',
     '/logout',          'logout',
     '/login',           'login'
+    )
+
+accounts_app = web.application(
+    urls, 
+    globals()
+    )
+
+db = web.database(
+    dbn = 'mysql', 
+    user = 'root', 
+    pw = secret.pw, 
+    db = 'juxif'
+    )
+
+if web.config.get('_session') is None: # the fishiest thing ever ... something ain't right here!
+    session = web.session.Session(
+        accounts_app, 
+        web.session.DiskStore('sessions'),
+        initializer = {
+            'auth': False,
+            'time': time.time(),
+    
+            'uid': None,
+            'email': None,
+            'uname': None
+            }
+        )
+    web.config._session = session
+else:
+    session = web.config._session
+
+renderer = web.template.render(
+    'templates/accounts/', 
+    base = '../layout',
+    globals = {
+        'session': session,
+        }
     )
 
 class accounts:
@@ -41,40 +73,43 @@ class accounts:
 
 class login:
     def GET(self):
-        i = web.input()
+        return renderer.login()
+    def POST(self):
+        section = web.url().split('/')[1]
+        i = web.input(
+            identity = None, 
+            passwd = None
+            )
 
-        if i.login is None:
-            renderer.login()
-
-        email = i.email
-        uname = i.uname
+        identity = i.identity
         passwd = i.passwd
 
-        what = 'uid, email, uname, passwd'
-        where = 'email = %s OR uname = %s' % (email, uname)
+        what = 'uid, email, username, password'
+        where = "(email='%s' OR username='%s')" % (identity, identity)
 
         query = db.select('users', None, 
             what, where)
 
+        row = query[0]
+
         hash = SHA256.new()
         hash.update(secret.salt)
-        hash.update(query.email)
+        hash.update(row.email)
         hash.update(passwd)
-        passwd = hash.digest()
+        shadow = hash.digest()
 
         # TODO: implement HTTP Digest Authentication :-fsck yeah! https://github.com/mahrud/webpy_http-digest-auth
-        if passwd == query.passwd:
-            session.start()
+        if shadow.encode('hex') == row.password:
+#           session.start()
             session.auth = True
             session.time = time.time()
-
-            session.uid = query.uid
-            session.email = query.email
-            session.uname = query.uname
+            session.uid  = row.uid
+            session.email = row.email
+            session.uname = row.username
 
             return web.seeother("/")
         else:
-            return renderer.login(1)
+            return renderer.login(1, identity)
 
 class logout:
     def GET(self):
@@ -92,13 +127,13 @@ class register:
             token = None
             )
 
+        token = i.token
         fname = i.fname
         uname = i.uname
         email = i.email
         passwd = i.passwd
-        token = i.token
 
-        time = time.time()
+        ctime = time.time()
 
         """
         Summary of what is about to happen:
@@ -134,7 +169,7 @@ class register:
             hash.update(passwd)
             key = hash.digest()
 
-            nonce = str(time).encode('hex') # FIXME: should we make it more complex?
+            nonce = str(ctime).encode('hex') # FIXME: should we make it more complex?
 
             ctr = Counter.new(128)
             cipher = AES.new(key, AES.MODE_CTR, counter = ctr)
@@ -159,7 +194,7 @@ class register:
 
             # FIXME: create general email templates
             subject = ''
-            content = '<a href="%s">%s</a>' % (confirm, confirm)
+            content = '<a href="%s">%s</a>' % (token, token)
             # FIXME: We are supposed to email this!
 
             return renderer.confirm(token)
@@ -207,23 +242,35 @@ class register:
 
             """
             To ensure that the token is current, we find difference 
-            between time and ttime, if it is more than 24 hours, we 
+            between ctime and ttime, if it is more than 24 hours, we 
             ignore the token and ask the user to register again.
             """
             ttime = float(nonce.decode('hex'))
-            if time - ttime > 24 * 60 * 60:
+            if ctime - ttime > 24 * 60 * 60:
                 return renderer.register(1)
+
+            """
+            Now we have to store a shadow of the password in db.
+            First we set up the hash function:
+                hash(P) -> SHA256(P)
+            Based on that, we have:
+                shadow = SHA256(salt | email | passwd)
+            """
+            hash = SHA256.new()
+            hash.update(secret.salt)
+            hash.update(email.decode('hex'))
+            hash.update(passwd.decode('hex'))
+            shadow = hash.digest()
 
             uid = db.insert('users',
                 gid      = -1, # FIXME
                 email    = email.decode('hex'),
                 username = uname.decode('hex'),
                 realname = fname.decode('hex'),
-                password = passwd.decode('hex')
+                password = shadow.encode('hex')
                 )
 
             raise web.seeother('/%d' % (uid))
 
-accounts_app = web.application(urls, globals())
 if __name__ == "__main__":
     accounts_app.run()

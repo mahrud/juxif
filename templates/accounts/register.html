@@ -3,36 +3,38 @@ $var title: ثبت نام
 
 <article id="register">
     <center>
-    <form method="POST" enctype="multipart/form-data" action="" class="form">
+    <form method="POST" action="" class="form">
         <center><b><label>فرم ثبت نام</label></b></center>
         $if expired:
-            <p style="color: red"><b>The confirmation link is expired. Please register again:</b></p> $# FIXME: translate
+            <p style="color: red"><b>تاریخ انقضای لینک تائید اعتبار گذشته است. لطفا دوباره ثبت نام کنید:</b></p>
 
         <label for="fname">نام کامل*:</label>
         <input type="text" name="fname" value="گل آقا" 
-            class="gray" onclick="clicked(this)"><br/>
+            class="gray" onclick="clicked(this)" autofocus required><br/>
 
         <label for="uname">نام کاربری*:</label>
-        <input type="text" name="uname" value='گل_آقا, gol-agha' 
-            class="gray" onclick="clicked(this)"><br/>
-        $# check availability + maybe we can delete this and work just with email
+        <input type="text" name="uname" value='گل_آقا, gol_agha' 
+            class="gray" onclick="clicked(this)" required><br/>
+$#      do we need to check availability? switching to email only ...
 
         <label for="email">ایمیل*:</label>
-        <input type="email" name="email" value="gol@abdaar.khaane" 
-            class="gray" onclick="clicked(this)"><br/>
+        <input type="email" name="email" id="email" value="gol@abdar.khane" 
+            class="gray" onclick="clicked(this)" required><br/>
+$#      check availability
 
         <label for="email_confirm">بازم ایمیل*:</label>
-        <input type="email" name="email_confirm" value="gol@abdaar.khaane" 
-            class="gray" onclick="clicked(this)"><br/>
-        $# check that they match
+        <input type="email" id="email_confirm" value="gol@abdar.khane" 
+            class="gray" onclick="clicked(this)" onchange="match(this, 'email')" required><br/>
+$#      check that they match
 
         <label for="passwd">رمز*:</label>
-        <input type="password" name="passwd"><br/>
-        $# disable this, send an email with confirmation link, set it later
+        <input type="password" name="passwd" id="passwd" 
+            onchange="secure(this)" required><br/>
+$#      disable this, send an email with confirmation link, set it later
 
-        $# terms of use check?
+$#      terms of use check?
 
-        <input type="submit" value="ثبت نام">
+        <input type="submit" id="register" value="ثبت نام">
     </form>
     </center>
 </article>

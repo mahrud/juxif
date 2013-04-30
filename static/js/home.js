@@ -44,3 +44,18 @@ function clicked(element) {
     element.onclick='';
     element.style.color='black';
 };
+
+function match(element2, id) {
+    element1 = document.getElementById(id);
+    if(element1.value != element2.value)
+        element2.style.borderColor="#dd4b39";
+    else
+        element.style.borderColor="rgba(0,0,0,0.2)";
+};
+
+function secure(element) {
+    if(element.value.length < 8)
+        element.style.borderColor="#dd4b39";
+    else
+        element.style.borderColor="rgba(0,0,0,0.2)";
+};
