@@ -4,19 +4,29 @@ $var title: ورود
 <article id="login">
     <center>
     <form method="POST" action="" class="form">
-        <center><b><label>ورود</label></b></center>
-        $if err:
-            <p style="color: red"><b>رمز ورود اشتباه است!</b></p>
+        <center>
+            <b><label>ورود</label></b>
+            $if err == 1:
+                <div class="error" style="color: red">
+                    <b>نام کاربری یا ایمیل مورد نظر در سیستم موجود نمی باشد!<br/>
+                       لطفا دوباره شماره گیری نمایید!!</b></div>
+            $elif err == 2:
+                <div class="error" style="color: red">
+                    <b>رمز ورود اشتباه است!<br/>
+                       وارد شوید، یا پسوردتان را بازیافت کنید.</b></div>
+            $elif err == 3:
+                <div class="error" style="color: red">
+                    <b>ایمیل وارد شده در سیستم یافت شد.<br/>
+                       وارد شوید، یا پسوردتان را بازیافت کنید.</b></div>
+        </center>
 
         <label for="identity">نام کاربری یا ایمیل:</label>
-        $code:
-            if identity is None:
-                identity = '"gol_agha, gol@abdar.khane'
-        <input type="text" name="identity" id="identity" value="$identity"
-            class="gray" onclick="clicked(this)" autofocus required><br/>
+        <input type="text" name="identity" id="identity" autofocus required 
+            value="$identity" placeholder="gol_agha, gol@abdar.khane" ><br/>
 
         <label for="passwd">رمز:</label>
-        <input type="password" name="passwd" id="passwd" required><br/>
+        <input type="password" name="passwd" id="passwd" required
+            placeholder="Password"><br/>
 
         <input type="submit" id="login" value="ﻭﺭﻭﺩ">
     </form>
