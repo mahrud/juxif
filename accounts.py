@@ -1,6 +1,7 @@
 import web
 import time
 import secret
+from web import form
 
 from Crypto import Random
 from Crypto.Util import Counter
@@ -87,8 +88,10 @@ class login:
         what = 'uid, email, username, password'
         where = "(email='%s' OR username='%s')" % (identity, identity)
 
-        query = db.select('users', None, 
-            what, where)
+        query = db.select('users', None, what, where)
+
+        if len(query) == 0:
+            return renderer.login(1) # username / email not found
 
         row = query[0]
 
@@ -98,9 +101,9 @@ class login:
         hash.update(passwd)
         shadow = hash.digest()
 
-        # TODO: implement HTTP Digest Authentication :-fsck yeah! https://github.com/mahrud/webpy_http-digest-auth
+        # TODO: implement HTTP Digest Authentication :-fsck yeah!
+        # https://github.com/mahrud/webpy_http-digest-auth
         if shadow.encode('hex') == row.password:
-#           session.start()
             session.auth = True
             session.time = time.time()
             session.uid  = row.uid
@@ -109,16 +112,31 @@ class login:
 
             return web.seeother("/")
         else:
-            return renderer.login(1, identity)
+            return renderer.login(2, identity) # wrong password
 
 class logout:
     def GET(self):
         session.kill()
         return renderer.logout("Bye!")
 
+register_form = form.Form( #FIXME
+    form.Textbox("fname", description="Full Name", id="fname",
+        autofocus=None, required=None, placeholder="gol agha", post="<br/>"),
+    form.Textbox("uname", description="Username", id="uname",
+        required=None, placeholder="gol_agha", post="<br/>"),
+    form.Textbox("email", description="Email", id="email",
+        required=None, placeholder="gol@abdar.khane", post="<br/>"),
+    form.Textbox("email_confirm", description="Confirm Email", id="email_confirm",
+        required=None, placeholder="gol@abdar.khane", post="<br/>"),
+    form.Password("passwd", description="Password", id="passwd",
+        required=None, placeholder="P4s5W0rd", 
+        pattern="\S{5,10}", onchange="secure(this)", post="<br/>"),
+    form.Button("submit", type="submit", description="Register", id="register")
+)
+
 class register:
     def GET(self):
-        return renderer.register()
+        return renderer.register(register_form)
     def POST(self):
         section = web.url().split('/')[1]
         i = web.input(
@@ -140,12 +158,26 @@ class register:
         User to us:
             fullname, username, email, and password
         We to the user:
-            AES(SHA256(salt | password), (hex(fullname) : hex(username) : hex(email) : hex(password) : hex(nonce)))
+            AES(
+                SHA256(salt | password), 
+                hex(fullname) : hex(username) : hex(email) : hex(password) : hex(nonce)
+                )
         Now, if the user successfully returened:
             token, password
         And the time of token was less than 24 hours ago, we register him!
         """
         if token is None:
+            """
+            First we check that the username or email is not already in the system:
+            """
+            what = 'email, username'
+            where = "(email='%s' OR username='%s')" % (email, uname)
+
+            query = db.select('users', None, what, where)
+
+            if len(query) > 0:
+                return renderer.login(3, username)
+
             """
             What we get from the user: fullname, username, email, and password
             Then:
@@ -247,7 +279,7 @@ class register:
             """
             ttime = float(nonce.decode('hex'))
             if ctime - ttime > 24 * 60 * 60:
-                return renderer.register(1)
+                return renderer.register(register_form, 1)
 
             """
             Now we have to store a shadow of the password in db.
