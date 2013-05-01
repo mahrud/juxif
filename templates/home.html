@@ -1,42 +1,31 @@
-$var title: خانه
+$def with (data)
+$var title: Accounts Page
 
-    <article id="home">
-        <center>
-        <section class="bigblock">
-            <div class="column" id="left">
-                <div class="block" id="top">
-                    <img src="/static/img/bigblack/problem.png" class="button" id="problem"
-                        onmouseover="showTooltip('home_tooltip','مساله ها')"
-                        onmouseout="hideTooltip('home_tooltip')"
-                        onclick="navigate('problem')">
-                </div>
-
-                <div class="block" id="bottom">
-                    <img src="/static/img/bigblack/contest.png" class="button" id="contest"
-                        onmouseover="showTooltip('home_tooltip','مسابقات و لیگ')"
-                        onmouseout="hideTooltip('home_tooltip')"
-                        onclick="navigate('contest');">
-                </div>
-            </div>
-
-            <div class="column" id="right">
-                <div class="block" id="top">
-                    <img src="/static/img/bigblack/algorithm.png" class="button" id="algorithm" 
-                        onmouseover="showTooltip('home_tooltip','الگوریتم ها')"
-                        onmouseout="hideTooltip('home_tooltip')"
-                        onclick="navigate('algorithm');">
-                </div>
-
-                <div class="block" id="bottom">
-                    <img src="/static/img/bigblack/course.png" class="button" id="course"
-                        onmouseover="showTooltip('home_tooltip','درسنامه ها')"
-                        onmouseout="hideTooltip('home_tooltip')"
-                        onclick="navigate('course');">
-                </div>
-            </div>
-            <div class="tooltip">
-                <p class="tooltip" id="home_tooltip"></p>
-            </div>
-        </section>
-        </center>
-    </article>
+    $# if not logged in, redirect to login, else, to accounts page
+    <center>
+    $session.uname
+    <table border=1 cellpadding="0" cellspacing="0">
+    <tbody>
+        <tr>
+        <th>#</th>
+        <th>Fullname</th>
+        <th>Username</th>
+        <th>Registration Time</th>
+        <th>Email</th>
+        </tr>
+    $for i in data:
+        <tr>
+            <td><a href="/$i.uid">$i.uid</a></td>
+            <td>$i.realname</td>
+            <td>$i.username</td>
+            <td>$i.created</td>
+            $# FIXME: make the email spam proof
+            $code:
+                addr  = i.email.split('@')[0] + '+NOSPAM@' + i.email.split('@')[1]
+                email = i.email.split('@')[0] + ' [at] ' + i.email.split('@')[1]
+            <td><a href="mailto:$addr">$email</a></td>
+            $# FIXME: some process to count shoots, accepted and total
+        </tr>
+    </tbody>
+    </table>
+    </center>

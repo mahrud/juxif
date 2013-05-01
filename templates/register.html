@@ -1,0 +1,44 @@
+$def with (err = 0)
+$var title: Registration Page
+
+    <center>
+    <form method="POST" action="">
+        <center><b><label>Register:</label></b>
+            $if err == 1:
+                <div style="color: red">
+                    <b>Confirmation link is expired. Register again.</b></div>
+            $elif err == 2:
+                <div style="color: red">
+                    <b></b></div>
+            $elif err == 3:
+                <div style="color: red">
+                    <b></b></div>
+        </center>
+
+        <label for="fname">Fullname*:</label>
+        <input type="text" name="fname" required autofocus
+            placeholder="John Smith" ><br/>
+
+        <label for="uname">Username*:</label>
+        <input type="text" name="uname" required
+            placeholder="john_smith" ><br/>
+$#      do we need to check availability? switching to email only ...
+
+        <label for="email">Email*:</label>
+        <input type="email" name="email" id="email" required
+            placeholder="john@smith.com" ><br/>
+$#      check availability
+
+        <label for="email_confirm">Confirm email*:</label>
+        <input type="email" id="email_confirm" required
+            placeholder="john@smith.com" onchange="match(this, 'email')" ><br/>
+
+        <label for="passwd">Password*:</label>
+        <input type="password" name="passwd" id="passwd" required
+            pattern="\S{7,}" placeholder="Password" onchange="secure(this)" ><br/>
+$#      disable this, send an email with confirmation link, set it later?
+
+$#      terms of use check?
+        <input type="submit" id="register" value="Register">
+    </form>
+    </center>

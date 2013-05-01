@@ -1,0 +1,17 @@
+$def with (content, err = 0)
+$var title: Confirmation Page
+
+    <center>
+    <form method="POST" enctype="multipart/form-data" action="">
+        <center><b><label>Confirmation</label></b></center>
+        $if err:
+            <p style="color: red"><b>Password didn't match!</b></p>
+
+        <input readonly name="token" size=64 value="$content"></input><br/>
+
+        <label for="passwd">Password*:</label>
+        <input type="password" name="passwd"><br/>
+
+        <input type="submit" value="Confirm">
+    </form>
+    </center>

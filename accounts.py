@@ -16,42 +16,27 @@ urls = (
     '/login',           'login'
     )
 
-accounts_app = web.application(
-    urls, 
-    globals()
-    )
+app = web.application(urls, globals())
 
-db = web.database(
-    dbn = 'mysql', 
-    user = 'root', 
-    pw = secret.pw, 
-    db = 'juxif'
-    )
+db = web.database(dbn = 'sqlite', db = 'sqlite.db')
 
-if web.config.get('_session') is None: # the fishiest thing ever ... something ain't right here!
+db.query("DELETE from sessions")
+db.query("DELETE from users")
+
+if web.config.get('_session') is None:
     session = web.session.Session(
-        accounts_app, 
-        web.session.DiskStore('sessions'),
+        app, 
+        web.session.DBStore(db, 'sessions'),
         initializer = {
-            'auth': False,
-            'time': time.time(),
-    
-            'uid': None,
-            'email': None,
-            'uname': None
+            'auth': False, 'time': time.time(),
+            'uid': None, 'email': None, 'uname': None
             }
         )
     web.config._session = session
 else:
     session = web.config._session
 
-renderer = web.template.render(
-    'templates/accounts/', 
-    base = '../layout',
-    globals = {
-        'session': session,
-        }
-    )
+renderer = web.template.render('templates/', base="layout", globals = {'session': session})
 
 class accounts:
     def GET(self, uid = None):
@@ -61,6 +46,8 @@ class accounts:
 
         what = 'uid, gid, realname, username, email, created'
         where = str((uid == None) or ('uid = %s' % (str(uid))))
+        if where == 'True':
+            where = None
 
         limit = 19  # Perfect size for my beloved X61 Thinkpad screen!
         offset = (page - 1) * limit
@@ -69,7 +56,6 @@ class accounts:
             what, where, 
             None, None,
             limit, offset)
-
         return renderer.home(query)
 
 class login:
@@ -90,7 +76,7 @@ class login:
 
         query = db.select('users', None, what, where)
 
-        if len(query) == 0:
+        if len(list(query)) == 0:
             return renderer.login(1) # username / email not found
 
         row = query[0]
@@ -101,7 +87,7 @@ class login:
         hash.update(passwd)
         shadow = hash.digest()
 
-        # TODO: implement HTTP Digest Authentication :-fsck yeah!
+        # TODO: add HTTP Digest Authentication :-fsck yeah!
         # https://github.com/mahrud/webpy_http-digest-auth
         if shadow.encode('hex') == row.password:
             session.auth = True
@@ -160,7 +146,7 @@ class register:
 
             query = db.select('users', None, what, where)
 
-            if len(query) > 0:
+            if len(list(query)) > 0:
                 return renderer.login(3, username)
 
             """
@@ -284,10 +270,11 @@ class register:
                 email    = email.decode('hex'),
                 username = uname.decode('hex'),
                 realname = fname.decode('hex'),
-                password = shadow.encode('hex')
+                password = shadow.encode('hex'),
+                access   = -1
                 )
 
             raise web.seeother('/%d' % (uid))
 
 if __name__ == "__main__":
-    accounts_app.run()
+    app.run()

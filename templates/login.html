@@ -1,0 +1,31 @@
+$def with (err = 0, identity = None)
+$var title: Login Page
+
+    <center>
+    <form method="POST" action="">
+        <center>
+            <b><label>Login</label></b>
+            $if err == 1:
+                <div style="color: red">
+                    <b>Username or email not found.</b></div>
+            $elif err == 2:
+                <div style="color: red">
+                    <b>Wrong password!<br/>
+                       TODO: restore password</b></div>
+            $elif err == 3:
+                <div style="color: red">
+                    <b>Username or email already exists!</b></div>
+        </center>
+
+        <label for="identity">Username or email:</label>
+        <input type="text" name="identity" id="identity" autofocus required 
+            value="$identity" placeholder="john_smith, john@smith.com" ><br/>
+
+        <label for="passwd">Password:</label>
+        <input type="password" name="passwd" id="passwd" required
+            placeholder="Password"><br/>
+
+        <input type="submit" id="login" value="login">
+    </form>
+    </center>
+</article>
