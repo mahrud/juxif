@@ -49,7 +49,7 @@ renderer = web.template.render(
     'templates/accounts/', 
     base = '../layout',
     globals = {
-        'session': session,
+        'session': session
         }
     )
 
@@ -90,7 +90,7 @@ class login:
 
         query = db.select('users', None, what, where)
 
-        if len(query) == 0:
+        if len(list(query)) == 0:
             return renderer.login(1) # username / email not found
 
         row = query[0]
@@ -160,7 +160,7 @@ class register:
 
             query = db.select('users', None, what, where)
 
-            if len(query) > 0:
+            if len(list(query)) > 0:
                 return renderer.login(3, username)
 
             """
