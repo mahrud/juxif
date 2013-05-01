@@ -119,24 +119,9 @@ class logout:
         session.kill()
         return renderer.logout("Bye!")
 
-register_form = form.Form( #FIXME
-    form.Textbox("fname", description="Full Name", id="fname",
-        autofocus=None, required=None, placeholder="gol agha", post="<br/>"),
-    form.Textbox("uname", description="Username", id="uname",
-        required=None, placeholder="gol_agha", post="<br/>"),
-    form.Textbox("email", description="Email", id="email",
-        required=None, placeholder="gol@abdar.khane", post="<br/>"),
-    form.Textbox("email_confirm", description="Confirm Email", id="email_confirm",
-        required=None, placeholder="gol@abdar.khane", post="<br/>"),
-    form.Password("passwd", description="Password", id="passwd",
-        required=None, placeholder="P4s5W0rd", 
-        pattern="\S{5,10}", onchange="secure(this)", post="<br/>"),
-    form.Button("submit", type="submit", description="Register", id="register")
-)
-
 class register:
     def GET(self):
-        return renderer.register(register_form)
+        return renderer.register()
     def POST(self):
         section = web.url().split('/')[1]
         i = web.input(
@@ -279,7 +264,7 @@ class register:
             """
             ttime = float(nonce.decode('hex'))
             if ctime - ttime > 24 * 60 * 60:
-                return renderer.register(register_form, 1)
+                return renderer.register(1)
 
             """
             Now we have to store a shadow of the password in db.

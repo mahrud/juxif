@@ -1,4 +1,4 @@
-$def with (form, err = 0)
+$def with (err = 0)
 $var title: ثبت نام
 
 <article id="register">
@@ -16,8 +16,6 @@ $var title: ثبت نام
                     <b></b></div>
         </center>
 
-        $:form.render_css() $# TODO: hmmm :-?
-<!--    
         <label for="fname">نام کامل*:</label>
         <input type="text" name="fname" autofocus required
             placeholder="گل آقا" ><br/>
@@ -43,7 +41,6 @@ $#      disable this, send an email with confirmation link, set it later?
 
 $#      terms of use check?
         <input type="submit" id="register" value="ثبت نام">
---!>
     </form>
     </center>
 </article>
