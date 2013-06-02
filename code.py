@@ -1,10 +1,12 @@
 import os
 import web
 import jucs
-import secret
 import shutil
 
-import accounts
+import config
+import secret
+
+from accounts import accounts_app, session
 #import course
 #import problem
 #import contest
@@ -24,10 +26,10 @@ renderer = {
 
 urls = (
     '/?',                       'home',
-#   '/admin',                   accounts.accounts_app,
+#   '/admin',                   accounts_app,
 
     '/accounts/status/(\d+)',   'status',
-    '/accounts',                accounts.accounts_app,
+    '/accounts',                accounts_app,
 
     '/news/?',                  'news',
 #   '/news/(\d+)',              'news',
@@ -138,7 +140,7 @@ class status:
 
         query = db.select('shots', None, 
             what, where, 
-            order[section], None, #group[section], FIXME
+            'subid DESC', None, #order[section], group[section], FIXME
             limit, offset)
 
         return renderer[section].status(query)
